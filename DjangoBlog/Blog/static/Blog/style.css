@@ -1,4 +1,74 @@
-a{
-
+:root{
+    --color-one:#D38B5D;/*navbar*/
+    --color-two:#f3ffb6;
+    --color-three:rgb(135, 74, 36);/* jakiej najechanie myszką*/
+    --color-slogan:rgb(101, 48, 17);
+    }
     
-}
+    
+    .color-one{
+    background-color:var(--color-one);
+    
+    }
+    .color-two{
+        background-color: var(--color-two);
+    }
+    
+    .navbar-text{
+        color: rgb(255, 255, 255);
+    }
+    .navbar-style{
+        padding: 5px 5px 5px;
+        color: black;
+    }
+    
+    .navbar-selector{
+        margin: 8px 0 8px;
+    }
+    
+    .navbar-style:hover {
+    background-color: var(--color-three); 
+    text-decoration: none ;
+    color:white;
+    }
+    
+    .navbar-borders{
+        border-right: 1px black solid;
+    
+    }
+    a{
+        color: black;
+    }
+    
+    a:hover{
+        text-decoration: none;
+        color: white;
+    }
+    
+    .slogan{
+        font-family: 'Pacifico', cursive;
+        color: var(--color-slogan);
+        margin: 0px;
+    }
+    
+    .main-container{
+        font-family: 'Roboto', sans-serif;
+        background-image: url("foto.jpg");
+        position: static;
+        height: 3000;;
+        width: auto;
+    }
+    
+    .content-holder{
+    background-color: rgb(255, 255, 255,0.5);
+    
+    
+    }
+    
+    .my-button{
+    height: 28px;
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%;
+    background-color: var(--color-one);
+    
+    }
