@@ -26,8 +26,8 @@
             <a href="{% url 'login' %}" class="MenuA">Login</a>
             {% endif %}
             {% if user.is_authenticated %}
-            <a href="{% url 'logout'%}?next={% url 'home' %}" class="MenuA">Profil</a>
-            <a href="" class="MenuA">Logout</a>
+            <a  class="MenuA">Profil</a>
+            <a href="{% url 'logout'%}?next={% url 'home' %}" class="MenuA">Logout</a>
             {% endif %}
       </div>
       <div style="clear:both"></div>
