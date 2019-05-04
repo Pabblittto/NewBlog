@@ -21,5 +21,5 @@ from Blog import urls as blogUrls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('registration/',blogViews.registration,name='registration')
+    path('',include('Blog.urls'))
 ]
