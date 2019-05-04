@@ -20,8 +20,8 @@ class Post(models.Model):
     Haslo=models.CharField(max_length=8)
     Obraz=models.ImageField(upload_to='Obrazki')
 
-class Uzytkownik(models.Model):
-    User=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True) #dziedziczenie pola z wbudowanej tabeli User
+class Profil(models.Model):
+    User=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     Zdjecie=models.ImageField(default='domyslny_obrazek.jpg',upload_to='Obrazki')
     Opis=models.CharField(max_length=1000)
 

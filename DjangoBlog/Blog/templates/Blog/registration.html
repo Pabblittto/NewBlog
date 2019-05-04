@@ -1,0 +1,14 @@
+{%extends "Blog/base.html"%}
+{%block content%}
+<h1 class="color"> rejestracje , witam </h1>
+
+<form method="POST" action="/registration/" >
+{% csrf_token %}
+{{form}}
+
+<button type="submit">Zarejestruj</button>
+</form>
+
+{%endblock content%}
+
+
