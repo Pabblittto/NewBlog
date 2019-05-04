@@ -11,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><!--czcionka-->
 <!--font awesome - do fajnych ikonek-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-<<<<<<< HEAD
 <link rel="stylesheet" type="text/css" href="{% static 'index/style.css' %}">
 
 </head>
@@ -21,7 +20,7 @@
     
       <div id=NavBar>
             <a class="MenuA">Search</a>
-            <a href="{% url 'index' %}" class="MenuA">Main Page</a>
+            <a href="{% url 'Home' %}" class="MenuA">Main Page</a>
             {%if not user.is_authenticated %}
             <a href="{% url 'registration' %}" class="MenuA">Register</a>
             <a href="{% url 'Login' %}" class="MenuA">Login</a>
@@ -40,84 +39,6 @@
 {%endblock%}
       </div>
 </div>      
-=======
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<!-- powyżej jest dodany bootstrap-->
-<link rel="stylesheet" type="text/css" href="{% static 'index/style.css' %}">
-
-</head>
-
-<body class="color-two main-container">
-            <div> <!--this is all elements on the top-->
-                  <div class="slogan  text-center navbar-expand-lg color-one ">
-                        <p class="slogan h4" >Blogger...ponieważ każdy może tworzyć</p>
-                  </div>
-                  <nav class="navbar navbar-expand-lg navbar-light color-one p-0 row m-0">
-                        <div class="col-6 row p-0 m-0">
-                              <div class="navbar-style text-center navbar-borders">
-                                    <a href="/" class="">
-                                          <div class="">
-                                                <p class="m-0"> <i class="fas fa-home"></i> Home</p>
-                                          </div>
-                                    </a>
-                              </div>
-                              <div class="navbar-style text-center navbar-borders">
-                                    <a href="#" class="">
-                                          <div class="">
-                                                <p class="m-0"> <i class="fas fa-book-open"></i> Lista blogów</p>             
-                                          </div>
-                                    </a>
-                              </div>
-                        </div>
-                        <div class="col-6 row p-0 m-0 justify-content-end">
-                                    <div class=" row justify-content-end" style="font-size: 10px; margin: 2px">
-                                                <div class="input-group-prepend">
-                                                            <button class="my-button "  type="button">Szukaj</button>
-                                                </div>
-                                                <div>
-                                                      <input type="text" class="" style="height: 28px" placeholder="wyszukaj" >
-                                                </div>
-                                    </div>
-
-                              <div class="navbar-style text-center navbar-borders" style="border-left: 1px black solid;">
-                                    <a href="{% url 'registration' %}" class="">
-                                          <div class=" ">
-                                                <p class="m-0"><i class="fas fa-door-open"></i>  Register </p>
-                                          </div>
-                                    </a>
-                              </div>
-
-                              <div class="navbar-style text-center navbar-borders">
-                                    <a href="{% url 'login' %}" class="">
-                                          <div class=" ">
-                                                <p class="m-0"> <i class="fas fa-sign-in-alt"></i> Login</p>
-                                          </div>
-                                    </a>
-                              </div>
-
-
-                        </div>  
-                  </nav>
-                  {% if messages %}
-                        {% for message in messages %}
-                              <div class="alert alert-success">
-                                    {{message}}
-                              </div>
-                        {% endfor%}
-                  {% endif %}
-            </div>
-            
-      <div class=" container content-holder p-0">
-            <div class=" container row "  style="opacity: 1;"><!-- container of all eleents-->
-                  
-      
-      {% block content%}
-
-      {%endblock content%}
-            </div>
-      </div>
->>>>>>> 9a8d55cf155ee60262fa1305647d49de2fa5b1ae
 <footer class="page-footer "> </footer>
 <!--ponizej sa linki do bootstrapa-->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
