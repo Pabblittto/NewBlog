@@ -1,0 +1,38 @@
+{%extends 'Blog/base.html'%}
+{%block content%}
+{%for post in posts%}
+<div class="media">
+        <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="Generic placeholder image">
+        <div class="media-body">
+          <h5 class="mt-0">{{post.Tytul}}</h5>
+         {{post.Tresc}}
+        </div>
+      </div>
+      <button type="button" class="btn btn-info">Edytuj Post</button>
+      <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UsunPost{{post.IDPost}}">
+    Usuń Post
+  </button>
+  
+  <!-- Modal -->
+  <div class="modal" id="UsunPost{{post.IDPost}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Usuń Post</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="bg-danger text-white">Czy na pewno chcesz usunąć post?</div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+          <button type="button" class="btn btn-primary">Usuń</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{%endfor%}
+{%endblock%}

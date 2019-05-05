@@ -2,9 +2,10 @@
 {%block content%}
 <h1 class="color"> rejestracje , witam </h1>
 
-<form method="POST" action="/registration/" >
+<form method="POST" action="/registration/" style="margin-left:15px;">
 {% csrf_token %}
-{{form}}
+{{form.as_ul}}
+
 
 <button type="submit">Zarejestruj</button>
 </form>

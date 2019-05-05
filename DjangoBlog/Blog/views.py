@@ -33,3 +33,4 @@ def profile(request):
         p = models.Profil.objects.get(User=request.user)
     return render(request,"Blog/profile.html",{'account': p})
 
+
