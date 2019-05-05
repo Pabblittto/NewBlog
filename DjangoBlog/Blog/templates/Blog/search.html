@@ -2,11 +2,13 @@
 {%block content%}
 
 {% for one_post in posts %}
-<div>
-    <hr/>
-    <h1>{{one_post.Tytul}}</h1>
-    <hr/>
-</div>
+<div class="media">
+        <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="">
+        <div class="media-body">
+          <a class="nav-item" href="#"><h5 class="mt-0">{{one_post.Tytul}}</h5></a>
+          <h6 class='mt-0'><strong>{{one_post.IDBlog.Nazwa}}</strong> | {{one_post.Data}}</h6>
+        </div>
+      </div>
 {% endfor %}
 
 {%endblock content%}

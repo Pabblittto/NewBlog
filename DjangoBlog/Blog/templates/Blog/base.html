@@ -40,10 +40,16 @@
                   <a class="nav-link" href="{%url 'logout'%}">Logout</a>
                 </li>
                 {%endif%}
-              <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search" {% if phase %} value="{{ phase}}"{%endif%} >
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-              </form>
+                  <div class="input-group">
+                        <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
+                        <select class="custom-select" name="typ">
+                              <option selected value="Post">Post</option>
+                              <option value="Blog">Blog</option>    
+                        </select>    
+                        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search" {% if phase %} value="{{ phase}}"{%endif%} >
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                  </div>
             </div>
           </nav>
 {% endblock %}
@@ -62,7 +68,7 @@
               {%endif%}
             {% endfor%}
       {% endif %}
-      <br>  <br>  <br> 
+      <br> 
 <div class=container style="clear:both;"></div>
 {%block content%}
 {%endblock%}

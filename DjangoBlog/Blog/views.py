@@ -46,6 +46,11 @@ def search(request):
     else:
         messages.error(request,'You need to write what are you looking for')
         return render(request,'Blog/search.html')
+        #jeszcze ten search trzeba zmienic zeby patrzył czy szukkamy bloga czy posta
+
+def post(request):
+    pass # tu trzeba zrobic pobieranie id z requesta i jazda
+
 
 def details(request, blog_id):
     b = models.Blog.objects.get(IDBlog = blog_id)
