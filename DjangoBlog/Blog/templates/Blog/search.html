@@ -1,0 +1,12 @@
+{%extends "Blog/base.html"%}
+{%block content%}
+
+{% for one_post in posts %}
+<div>
+    <hr/>
+    <h1>{{one_post.Tytul}}</h1>
+    <hr/>
+</div>
+{% endfor %}
+
+{%endblock content%}

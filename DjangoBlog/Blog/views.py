@@ -33,3 +33,16 @@ def profile(request):
         p = models.Profil.objects.get(User=request.user)
     return render(request,"Blog/profile.html",{'account': p})
 
+def search(request):
+    if (request.method=='GET'):
+        if request.GET.get('search')=='':
+            messages.error(request,'You need to write what are you looking for')
+            return render(request,'Blog/search.html')
+        fraza=request.GET.get('search')
+        posty=models.Post.objects.filter(Tytul__contains=fraza)
+        messages.success(request,f'There are {posty.count()} posts with your phrase')
+        return render(request,'Blog/search.html',{'posts':posty,'phase':fraza})
+    else:
+        messages.error(request,'You need to write what are you looking for')
+        return render(request,'Blog/search.html')
+        
