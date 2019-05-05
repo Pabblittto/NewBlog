@@ -1,0 +1,20 @@
+{%extends "Blog/base.html"%}
+{% load static %}
+{%block title %}
+<h4>Zaloguj się</h4>
+<div style="clear: both"></div>
+{%endblock%}
+{% block content %}
+<div style="float: left">Zaloguj się</div>
+<br>
+<br>
+<div style="margin-left: 40px;clear: both;">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+</div>
+
+{% endblock %}
+

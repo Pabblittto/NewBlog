@@ -4,7 +4,6 @@ from . import models
 from . import form
 from .form import LoginForm
 from .form import CustomRegisterForm
-
 # Create your views here.
 
 def registration(request):
@@ -15,9 +14,11 @@ def registration(request):
             user = Form.save()
             profil = models.Profil.objects.create(User=user,Opis='Tymczasowy Opis')
             profil.save()
+            user.Profil = profil
+            user.save()
             return redirect('home')
         else:
-            messages.error(request,"Błąd")
+            messages.error(request,"Błąd podczas wypełniania formularza")
             return render(request,'Blog/registration.html',{'form': Form})
     else:
         Form = CustomRegisterForm()
@@ -25,10 +26,10 @@ def registration(request):
 
 def home(request):
     posts = models.Post.objects.all()
-    return render(request,"Blog/main.html",{'posts': posts})
-def login(request):
-    if request.user.is_authenticated():
-        messages.success(request,'Zalogowano')
-        return render(request,"Blog/main.html")
-    else:
-        return render(request,"Blog/main.html")
+    return render(request,"Blog/home.html",{'posts': posts})
+
+def profile(request):
+    if request.user.is_authenticated:
+        p = models.Profil.objects.get(User=request.user)
+    return render(request,"Blog/profile.html",{'account': p})
+

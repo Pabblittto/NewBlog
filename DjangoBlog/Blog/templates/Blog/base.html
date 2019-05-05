@@ -5,43 +5,65 @@
    
 <head>
 <meta charset="utf-8">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Blogger</title>
 <link href="https://fonts.googleapis.com/css?family=Pacifico" rel="stylesheet"> <!--czcionka-->
 <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"><!--czcionka-->
 <!--font awesome - do fajnych ikonek-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="{% static 'Blog/style.css' %}">
 
 </head>
 <body>
+<div id=BigContainer style="margin-left:10px;margin-right:10px">
 {% block NavigationBar %}
-<div id=BigContainer>
-    
-      <div id=NavBar>
-            <a class="MenuA">Search</a>
-            <a href="{% url 'home' %}" class="MenuA">Main Page</a>
-            {%if not user.is_authenticated %}
-            <a href="{% url 'registration' %}" class="MenuA">Register</a>
-            <a href="{% url 'login' %}" class="MenuA">Login</a>
-            {% endif %}
-            {% if user.is_authenticated %}
-            <a  class="MenuA">Profil</a>
-            <a href="{% url 'logout'%}?next={% url 'home' %}" class="MenuA">Logout</a>
-            {% endif %}
-      </div>
-      <div style="clear:both"></div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{%url 'home'%}">Home</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+            {%if not user.is_authenticated%}
+                  <a class="nav-link" href="{%url 'login'%}">Login</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url 'registration'%}">Register</a>
+                </li>
+            {%else%}
+                 <li class="nav-item"></li>
+                  <a class="nav-link" href="{%url 'profile'%}">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{%url 'logout'%}">Logout</a>
+                </li>
+                {%endif%}
+              <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              </form>
+            </div>
+          </nav>
 {% endblock %}
-      <div id=Container style="clear:both;">
+      
             {% if messages %}
             {% for message in messages %}
+              {%if message.tags == 'success'%}
                   <div class="alert alert-success">
                         {{message}}
                   </div>
+              {%endif%}
+              {%if message.tags == 'error'%}
+                  <div class="alert alert-warning">
+                        {{message}}
+                  </div>
+              {%endif%}
             {% endfor%}
       {% endif %}
-{%if user.is_authenticated %}
-{% endif %}
+      <br>  <br>  <br> 
+<div class=container style="clear:both;"></div>
 {%block content%}
 {%endblock%}
       </div>

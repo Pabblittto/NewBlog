@@ -1,0 +1,22 @@
+{%extends 'Blog/base.html'%}
+{%block content%}
+<form>
+    <h2>Witaj {{account.User.username}}</h2>
+    <br>
+    <h6>Opis: {{account.Opis}}</h6>
+    <br><br>
+    <div class="form-group">
+            {%if account.Zdjecie%}
+            <img src="{{account.Zdjecie}}">
+            {%else%}
+            <h5>Brak zdjęcia</h5>
+            {%endif%}
+          <label for="formGroupExampleInput">Zmień zdjęcie</label>
+          <input type="file" id="formGroupExampleInput">
+        </div>
+        <div class="form-group">
+          <label for="formGroupExampleInput2">Zmień Opis</label>
+          <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+        </div>
+      </form>
+{%endblock%}
