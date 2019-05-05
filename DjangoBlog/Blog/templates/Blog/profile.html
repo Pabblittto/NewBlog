@@ -6,31 +6,30 @@
     <br>
     <h6>Opis: {{account.Opis}}</h6>
     <br><br>
-    <div class="form-group">
-            {%if account.Zdjecie%}
-            <img src="{{account.Zdjecie}}">
-            {%else%}
-            <h5>Brak zdjęcia</h5>
-            {%endif%}
-
-{%block tmp%}
-<label for="formGroupExampleInput">Zmień zdjęcie</label>
-<div class="input-group">
-    <div class="custom-file">
-      <input type="file" class="custom-file-input" id="inputGroupFile04">
-      <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-    </div>
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button">Button</button>
-    </div>
-  </div>
         <div class="form-group">
-          <label for="OpisForm">Zmień Opis</label>
-          <input type="text" class="form-control" id="OpisForm" placeholder="Wprowadź nowy opis" >
-        </div>
-        <button type="button" style="float:right" class="btn btn-info" id="OpisFormBtn">Zmień Opis</button>
-        <div style="clear:both"></div>
-      </form>
+            <!-- {%if account.Zdjecie%}-->
+            <img src="{{account.Zdjecie.url}}">
+            <!--  {%else%}
+      <h5>Brak zdjęcia</h5>
+      {%endif%}-->
+            {%block tmp%}
+            <label for="formGroupExampleInput">Zmień zdjęcie</label>
+            <div class="input-group">
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile04">
+                    <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
+                </div>
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button">Button</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="OpisForm">Zmień Opis</label>
+                <input type="text" class="form-control" id="OpisForm" placeholder="Wprowadź nowy opis">
+            </div>
+            <button type="button" style="float:right" class="btn btn-info" id="OpisFormBtn">Zmień Opis</button>
+            <div style="clear:both"></div>
+</form>
 <!-- Lista blogów użytkownika--> 
 
 {%if blogs%}

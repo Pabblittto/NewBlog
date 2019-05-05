@@ -22,7 +22,7 @@ class Post(models.Model):
 
 class Profil(models.Model):
     User=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
-    Zdjecie=models.ImageField(default='domyslny_obrazek.jpg',upload_to='Obrazki')
+    Zdjecie=models.ImageField(default='aaa.png',upload_to='Profilowe')
     Opis=models.CharField(max_length=1000)
 
 class Komentarz(models.Model):
