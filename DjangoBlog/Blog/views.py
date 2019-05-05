@@ -31,7 +31,8 @@ def home(request):
 def profile(request):
     if request.user.is_authenticated:
         p = models.Profil.objects.get(User=request.user)
-    return render(request,"Blog/profile.html",{'account': p})
+        b = models.Blog.objects.filter(IDAutor = request.user)
+    return render(request,"Blog/profile.html",{'account': p, 'blogs':b})
 
 def search(request):
     if (request.method=='GET'):
@@ -45,4 +46,10 @@ def search(request):
     else:
         messages.error(request,'You need to write what are you looking for')
         return render(request,'Blog/search.html')
+
+def details(request, blog_id):
+    b = models.Blog.objects.get(IDBlog = blog_id)
+    posts = models.Post.objects.filter(IDBlog = blog_id)
+    return render(request,'Blog/blog.html', {'blog': b, 'posts': posts})
+
         

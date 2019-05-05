@@ -1,6 +1,7 @@
 {%extends 'Blog/base.html'%}
 {%block content%}
-<form>
+<form action="/accounts/register/" method="post">
+{% csrf_token %}
     <h2>Witaj {{account.User.username}}</h2>
     <br>
     <h6>Opis: {{account.Opis}}</h6>
@@ -11,8 +12,9 @@
             {%else%}
             <h5>Brak zdjęcia</h5>
             {%endif%}
-          <label for="formGroupExampleInput">Zmień zdjęcie</label>
-         
+
+{%block tmp%}
+<label for="formGroupExampleInput">Zmień zdjęcie</label>
 <div class="input-group">
     <div class="custom-file">
       <input type="file" class="custom-file-input" id="inputGroupFile04">
@@ -29,26 +31,31 @@
         <button type="button" style="float:right" class="btn btn-info" id="OpisFormBtn">Zmień Opis</button>
         <div style="clear:both"></div>
       </form>
-      <br><br>
 <!-- Lista blogów użytkownika--> 
-<nav class="nav pills-flex-column">
+
+{%if blogs%}
+<nav class="nav flex-column">
     <ul class="navbar-nav mr-auto"></ul>
         {%for blog in blogs%}
-        <li class="nav-item"><a class="nav-link" href="#!">{{blog.Tytul}}</a></li>
+
+        <li class="nav-item"><a class="nav-link" href="{{blog.IDBlog}}/details">{{blog.Nazwa}}</a></li>
+
         {%endfor%}
       </nav>
       <br>
-
+      {%else%}
+      <h4>Nie masz żadnych blogów</h4>
+      {%endif%}
 
 <!-- Przycisk dodajacy bloga -->
+
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCentered">
   Dodaj Blog
 </button>
-<!-- Przycisk dodajacy Post -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DodajPostModal">
-  Dodaj Post
-</button>
+
 <!-- Wywołanie formularza do nowego bloga -->
+<form action="/accounts/register/" method="post">
+  {% csrf_token %}
 <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -65,37 +72,12 @@
         </div> 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <input type="submit" class="btn btn-primary" >
       </div>
     </div>
   </div>
 </div>
-<!-- Wywołanie formularza do nowego posta -->
-<div class="modal" id="DodajPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenteredLabel">Dodaj Post</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="NewPostForm">Podaj Tytuł Posta</label>
-          <input type="text" class="form-control" id="NewPostForm" placeholder="Wprowadź tytuł" >
-          <label for="NewPostTrescForm">Podaj Treść Posta</label>
-          <input type="text" class="form-control" id="NewPostTrescForm" placeholder="Wprowadź treść" >
-          <label for="NewPostForm">Podaj Hasło Posta</label>
-          <input type="text" class="form-control" id="NewPostForm" placeholder="Wprowadź hasło(opcjonalne)" >
-        </div> 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
+
+{%endblock%}
 {%endblock%}

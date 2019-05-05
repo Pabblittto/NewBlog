@@ -1,16 +1,22 @@
 {%extends 'Blog/base.html'%}
 {%block content%}
+<h1><strong>Posty z {{blog.Nazwa}}:</strong></h1>
+<br><br>
+{%if posts%}
 {%for post in posts%}
 <div class="media">
-        <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="Generic placeholder image">
+        <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="">
         <div class="media-body">
-          <h5 class="mt-0">{{post.Tytul}}</h5>
+          <h4 class="mt-0">{{post.Tytul}}   |   {{post.Data}}</h4>
+          <br>
          {{post.Tresc}}
+        
         </div>
       </div>
+      <br>
       <button type="button" class="btn btn-info">Edytuj Post</button>
       <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UsunPost{{post.IDPost}}">
+<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#UsunPost{{post.IDPost}}">
     Usuń Post
   </button>
   
@@ -35,4 +41,63 @@
     </div>
   </div>
 {%endfor%}
+{%else%}
+<h2>Ten blog nie ma żadnych postów</h2>
+{%endif%}
+<!-- Przycisk dodajacy Post -->
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#DodajPostModal">Dodaj Post</button>
+  <!-- Wywołanie formularza do nowego posta -->
+<form action="/accounts/register/" method="post">
+  {% csrf_token %}
+<div class="modal" id="DodajPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalCenteredLabel">Dodaj Post</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="NewPostForm">Podaj Tytuł Posta</label>
+          <input type="text" class="form-control" id="NewPostForm" placeholder="Wprowadź tytuł" >
+          <label for="NewPostTrescForm">Podaj Treść Posta</label>
+          <input type="text" class="form-control" id="NewPostTrescForm" placeholder="Wprowadź treść" >
+          <label for="NewPostForm">Podaj Hasło Posta</label>
+          <input type="text" class="form-control" id="NewPostForm" placeholder="Wprowadź hasło(opcjonalne)" >
+        </div> 
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+        <input type="submit" class="btn btn-primary">
+      </div>
+    </div>
+  </div>
+</div>
+</form>
+<br><br>
+<button type="button" class="btn btn-danger" style="float: right" data-toggle="modal" data-target="#exampleModalCentered">
+    Usuń Blog
+  </button>
+  
+  <!-- Wywołanie formularza do nowego bloga -->
+  <form action="/accounts/register/" method="post">
+    {% csrf_token %}
+  <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenteredLabel">Usunąć Blog?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+          <input type="submit" class="btn btn-primary" >
+        </div>
+      </div>
+    </div>
+  </div>
 {%endblock%}

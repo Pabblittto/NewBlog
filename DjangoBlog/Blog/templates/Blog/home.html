@@ -7,9 +7,8 @@
 <div class="media">
         <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="">
         <div class="media-body">
-          <h5 class="mt-0">{{post.Tytul}}</h5>
-          <h6 class='mt-0 float-right'>{{post.Data}}</h6>
-         {{post.Tresc}}
+          <a class="nav-item" href="#"><h5 class="mt-0">{{post.Tytul}}</h5></a>
+          <h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong> | {{post.Data}}</h6>
         </div>
       </div>
 {%endfor%}
