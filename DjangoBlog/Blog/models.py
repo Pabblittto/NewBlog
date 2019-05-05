@@ -17,8 +17,8 @@ class Post(models.Model):
     Tresc=models.TextField()
     Data=models.DateTimeField(default=timezone.now)
     IDBlog=models.ForeignKey(Blog,on_delete=models.CASCADE)
-    Haslo=models.CharField(max_length=8)
-    Obraz=models.ImageField(upload_to='Obrazki')
+    Haslo=models.CharField(max_length=8,blank=True)
+    Obraz=models.ImageField(upload_to='Obrazki',blank=True)
 
 class Profil(models.Model):
     User=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
