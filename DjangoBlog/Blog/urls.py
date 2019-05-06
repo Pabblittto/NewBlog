@@ -14,6 +14,7 @@ urlpatterns = [
     path('profile/',views.profile,name='profile'),
     path('search/',views.search,name='search'),
     path('profile/<int:blog_id>/details', views.details, name='details'),
+    path('post/<int:post_id>', views.post, name='post'),
     path('newBlog/',views.newBlog,name='newBlog'),
     path('editOpis/',views.editOpis,name='editOpis'),
     path('newPost/',views.newPost,name='newPost')

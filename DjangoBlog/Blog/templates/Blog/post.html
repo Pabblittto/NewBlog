@@ -1,19 +1,14 @@
 {%extends "Blog/base.html"%}
 {%block content%}
-{%if not posts%}
-<h4>Brak postów do wyświetlenia</h4>
-{%endif%}
-{%for post in posts %}
+
 <div class="media">
         <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="">
         <div class="media-body">
-          <a class="nav-item" href="post/{{post.IDPost}}"><h5 class="mt-0">{{post.Tytul}}</h5></a>
+          <a class="nav-item" href="#"><h5 class="mt-0">{{post.Tytul}}</h5></a>
           <h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong> | {{post.Data}}</h6>
+          <p>{{post.Tresc}}</p>
         </div>
       </div>
-{%endfor%}
+
 
 {%endblock content%}
-
-
-
