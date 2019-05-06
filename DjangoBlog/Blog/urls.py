@@ -13,8 +13,9 @@ urlpatterns = [
     path('logout/',auth_views.LogoutView.as_view(),name='logout'),
     path('profile/',views.profile,name='profile'),
     path('search/',views.search,name='search'),
-    path('profile/<int:blog_id>/details', views.details, name='details')
-
+    path('profile/<int:blog_id>/details', views.details, name='details'),
+    path('editProfile/',views.editProfile,name='editProfile'),
+    path('editOpis/',views.editOpis,name='editOpis')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

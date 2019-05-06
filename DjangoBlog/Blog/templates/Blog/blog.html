@@ -1,6 +1,7 @@
 {%extends 'Blog/base.html'%}
 {%block content%}
 <h1><strong>Posty z {{blog.Nazwa}}:</strong></h1>
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#DodajPostModal" style="float:right">Dodaj Post</button>
 <br><br>
 {%if posts%}
 {%for post in posts%}
@@ -45,7 +46,7 @@
 <h2>Ten blog nie ma żadnych postów</h2>
 {%endif%}
 <!-- Przycisk dodajacy Post -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#DodajPostModal">Dodaj Post</button>
+
   <!-- Wywołanie formularza do nowego posta -->
 <form action="/accounts/register/" method="post">
   {% csrf_token %}

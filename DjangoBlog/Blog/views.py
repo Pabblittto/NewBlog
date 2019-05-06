@@ -57,4 +57,16 @@ def details(request, blog_id):
     posts = models.Post.objects.filter(IDBlog = blog_id)
     return render(request,'Blog/blog.html', {'blog': b, 'posts': posts})
 
-        
+def editProfile(request):
+    if request.method == 'POST':
+        name = request.POST['NewBlogName']
+        nowyBlog = models.Blog.objects.create(Nazwa=name,IDAutor=request.user)
+        return redirect('profile')
+def editOpis(request):
+    if request.method == 'POST':
+        opis = request.POST.get('OpisForm',False)
+        request.user.Opis = opis
+        profil = models.Profil.objects.get(User=request.user)
+        profil.Opis = opis
+        profil.save()
+        return redirect('profile')

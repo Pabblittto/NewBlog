@@ -1,17 +1,11 @@
 {%extends 'Blog/base.html'%}
 {%block content%}
-<form action="/accounts/register/" method="post">
-{% csrf_token %}
     <h2>Witaj {{account.User.username}}</h2>
     <br>
     <h6>Opis: {{account.Opis}}</h6>
     <br><br>
         <div class="form-group">
-            <!-- {%if account.Zdjecie%}-->
             <img src="{{account.Zdjecie.url}}">
-            <!--  {%else%}
-      <h5>Brak zdjęcia</h5>
-      {%endif%}-->
             {%block tmp%}
             <label for="formGroupExampleInput">Zmień zdjęcie</label>
             <div class="input-group">
@@ -23,13 +17,15 @@
                     <button class="btn btn-outline-secondary" type="button">Button</button>
                 </div>
             </div>
+            <form action="/editOpis/" method="post">
+              {% csrf_token %}
             <div class="form-group">
                 <label for="OpisForm">Zmień Opis</label>
-                <input type="text" class="form-control" id="OpisForm" placeholder="Wprowadź nowy opis">
+                <input type="text" class="form-control" id="OpisForm" name="OpisForm" placeholder="Wprowadź nowy opis">
             </div>
-            <button type="button" style="float:right" class="btn btn-info" id="OpisFormBtn">Zmień Opis</button>
+            <input type="submit" style="float:right" class="btn btn-info" id="OpisFormBtn">
+          </form>
             <div style="clear:both"></div>
-</form>
 <!-- Lista blogów użytkownika--> 
 
 {%if blogs%}
@@ -53,30 +49,30 @@
 </button>
 
 <!-- Wywołanie formularza do nowego bloga -->
-<form action="/accounts/register/" method="post">
+<form action="/editProfile/" method="post">
   {% csrf_token %}
 <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalCenteredLabel">Dodaj Blog</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <input type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <div class="form-group">
           <label for="NewBlogForm">Podaj Nazwę Bloga</label>
-          <input type="text" class="form-control" id="NewBlogForm" placeholder="Wprowadź tytuł" >
+          <input type="text" class="form-control" id="NewBlogName" name="NewBlogName" placeholder="Wprowadź tytuł" >
         </div> 
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-        <input type="submit" class="btn btn-primary" >
+        <input type="submit" class="btn btn-primary" id="NewBlogCreation" >
       </div>
     </div>
   </div>
 </div>
-
+</form>
 {%endblock%}
 {%endblock%}
