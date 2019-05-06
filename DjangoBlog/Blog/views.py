@@ -57,10 +57,11 @@ def details(request, blog_id):
     posts = models.Post.objects.filter(IDBlog = blog_id)
     return render(request,'Blog/blog.html', {'blog': b, 'posts': posts})
 
-def editProfile(request):
+def newBlog(request):
     if request.method == 'POST':
         name = request.POST['NewBlogName']
         nowyBlog = models.Blog.objects.create(Nazwa=name,IDAutor=request.user)
+        messages.success(request,'Dodano Blog')
         return redirect('profile')
 def editOpis(request):
     if request.method == 'POST':
@@ -69,4 +70,5 @@ def editOpis(request):
         profil = models.Profil.objects.get(User=request.user)
         profil.Opis = opis
         profil.save()
+        messages.success(request,'Opis zmieniono')
         return redirect('profile')

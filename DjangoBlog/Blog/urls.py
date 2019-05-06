@@ -14,7 +14,7 @@ urlpatterns = [
     path('profile/',views.profile,name='profile'),
     path('search/',views.search,name='search'),
     path('profile/<int:blog_id>/details', views.details, name='details'),
-    path('editProfile/',views.editProfile,name='editProfile'),
+    path('newBlog/',views.newBlog,name='newBlog'),
     path('editOpis/',views.editOpis,name='editOpis')
 ]
 if settings.DEBUG:
