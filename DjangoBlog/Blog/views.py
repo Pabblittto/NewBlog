@@ -55,14 +55,17 @@ def search(request):
         
 
 def post(request,post_id):
-    post= models.Post.objects.get(IDPost=post_id)
-    if post.Haslo:
-        if request.session['verification'] == 'verified':
+    post = models.Post.objects.get(IDPost=post_id)
+    if request.method == 'POST':
+        haslo = request.POST.get('PasswordCheck',False)
+        if post.Haslo == haslo:
             return render(request,'Blog/post.html',{'post':post})
         else:
+            messages.error(request,'Podano błędne hasło')
             return redirect('home')
     else:
-        return render(request,'Blog/post.html')
+        return render(request,'Blog/post.html',{'post':post})
+
 
 
 
@@ -99,14 +102,3 @@ def newPost(request,blog_id):
             nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc)
         messages.success(request,'Dodano Post')
         return redirect('/profile/'+str(blog_id)+'/details')
-def Password(request,post_id):
-    if request.method == 'POST':
-        haslo = request.POST.get('PasswordCheck',False)
-        post = models.Post.objects.get(IDPost=post_id)
-        request.session['verification'] = 'NOTverified'
-        if post.Haslo == haslo:
-            request.session['verification'] = 'verified'
-            return redirect('/post/'+str(post_id)+'/')
-        else:          
-            messages.error(request,'Podano błędne hasło')
-            return redirect('home')

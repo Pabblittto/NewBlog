@@ -48,7 +48,7 @@
 <!-- Przycisk dodajacy Post -->
 
   <!-- Wywołanie formularza do nowego posta -->
-<form action="/profile/{{blog.IDBlog}}/newPost/" method="post">
+<form action="/profile/{{blog.IDBlog}}/newPost/" method="post" >
   {% csrf_token %}
 <div class="modal" id="DodajPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
