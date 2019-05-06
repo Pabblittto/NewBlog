@@ -40,16 +40,24 @@ def search(request):
             messages.error(request,'You need to write what are you looking for')
             return render(request,'Blog/search.html')
         fraza=request.GET.get('search')
-        posty=models.Post.objects.filter(Tytul__contains=fraza)
-        messages.success(request,f'There are {posty.count()} posts with your phrase')
-        return render(request,'Blog/search.html',{'posts':posty,'phase':fraza})
+        typ=request.GET['typ']
+        if typ=='Post':
+            posty=models.Post.objects.filter(Tytul__contains=fraza)
+            messages.success(request,f'There are {posty.count()} posts with your phrase')
+            return render(request,'Blog/search.html',{'posts':posty,'phase':fraza,'type':typ})            
+        else:
+            blogi=models.Blog.objects.filter(Nazwa__contains=fraza)
+            messages.success(request,f'There are {blogi.count()} blogs with your phrase')
+            return render(request,'Blog/search.html',{'blogs':blogi,'phase':fraza,'type':typ})               
     else:
         messages.error(request,'You need to write what are you looking for')
         return render(request,'Blog/search.html')
-        #jeszcze ten search trzeba zmienic zeby patrzył czy szukkamy bloga czy posta
+        
 
-def post(request):
-    pass # tu trzeba zrobic pobieranie id z requesta i jazda
+def post(request,post_id):
+    post= models.Post.objects.get(IDPost=post_id)
+    return render(request,'Blog/post.html',{'post':post})
+
 
 
 def details(request, blog_id):

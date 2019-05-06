@@ -43,8 +43,8 @@
                   <div class="input-group">
                         <form class="form-inline my-2 my-lg-0" method="GET" action="{% url 'search' %}">
                         <select class="custom-select" name="typ">
-                              <option selected value="Post">Post</option>
-                              <option value="Blog">Blog</option>    
+                              <option {%if type == 'Post' %} selected {%endif%} value="Post">Post</option>
+                              <option  {%if type == 'Blog' %} selected {%endif%}  value="Blog">Blog</option>    
                         </select>    
                         <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="search" {% if phase %} value="{{ phase}}"{%endif%} >
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

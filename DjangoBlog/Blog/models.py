@@ -7,12 +7,12 @@ from django.db.models.signals import post_save
 
 # Create your models here.
 class Blog(models.Model):
-    IDBlog=models.IntegerField(primary_key=True)
+    IDBlog=models.AutoField(primary_key=True)
     Nazwa=models.CharField(max_length=128)
     IDAutor=models.ForeignKey(User,on_delete=models.CASCADE)
 
 class Post(models.Model):
-    IDPost=models.IntegerField(primary_key=True)
+    IDPost=models.AutoField(primary_key=True)
     Tytul=models.CharField(max_length=128)
     Tresc=models.TextField()
     Data=models.DateTimeField(default=timezone.now)
@@ -26,7 +26,7 @@ class Profil(models.Model):
     Opis=models.CharField(max_length=1000)
 
 class Komentarz(models.Model):
-    IDKomentarz=models.IntegerField(primary_key=True)
+    IDKomentarz=models.AutoField(primary_key=True)
     IDUzytkownik=models.ForeignKey(User,on_delete=models.CASCADE)
     IDPost=models.ForeignKey(Post,on_delete=models.CASCADE)
     Data=models.DateTimeField(default=timezone.now)

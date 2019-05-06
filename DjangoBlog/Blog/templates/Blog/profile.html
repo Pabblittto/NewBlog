@@ -30,12 +30,12 @@
 
 {%if blogs%}
 <nav class="nav flex-column">
-    <ul class="navbar-nav mr-auto"></ul>
+        <ul class="list-group mr-auto">
         {%for blog in blogs%}
-
-        <li class="nav-item"><a class="nav-link" href="{{blog.IDBlog}}/details">{{blog.Nazwa}}</a></li>
+        <li class="list-group-item"><a class="nav-link" href="{{blog.IDBlog}}/details">{{blog.Nazwa}}</a></li>
 
         {%endfor%}
+        </ul>
       </nav>
       <br>
       {%else%}
