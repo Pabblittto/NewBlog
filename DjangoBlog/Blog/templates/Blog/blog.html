@@ -48,7 +48,7 @@
 <!-- Przycisk dodajacy Post -->
 
   <!-- Wywołanie formularza do nowego posta -->
-<form action="/accounts/register/" method="post">
+<form action="/newPost/" method="post">
   {% csrf_token %}
 <div class="modal" id="DodajPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -62,11 +62,11 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="NewPostForm">Podaj Tytuł Posta</label>
-          <input type="text" class="form-control" id="NewPostForm" placeholder="Wprowadź tytuł" >
+          <input type="text" class="form-control" id="NewPostForm" name="NewPostTitle" placeholder="Wprowadź tytuł" >
           <label for="NewPostTrescForm">Podaj Treść Posta</label>
-          <input type="text" class="form-control" id="NewPostTrescForm" placeholder="Wprowadź treść" >
+          <input type="text" class="form-control" id="NewPostTrescForm" name="NewPostContent" placeholder="Wprowadź treść" >
           <label for="NewPostForm">Podaj Hasło Posta</label>
-          <input type="text" class="form-control" id="NewPostForm" placeholder="Wprowadź hasło(opcjonalne)" >
+          <input type="text" class="form-control" id="NewPostForm" name="NewPostPassword" placeholder="Wprowadź hasło(opcjonalne)" >
         </div> 
       </div>
       <div class="modal-footer">

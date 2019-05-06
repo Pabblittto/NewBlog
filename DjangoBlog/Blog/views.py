@@ -72,3 +72,14 @@ def editOpis(request):
         profil.save()
         messages.success(request,'Opis zmieniono')
         return redirect('profile')
+
+def newPost(request):
+    if request.method == 'POST':
+        tytul = request.POST.get('NewPostTitle',False)
+        tresc = request.POST.get('NewPostContent',False)
+        if request.POST.get('NewPostPassword',False) != '':
+            haslo = request.POST.get('NewPostPassword',False)
+            nowyPost = models.Post.objects.create(Tytul=tytul,Tresc=tresc,Haslo=haslo)
+        nowyPost = models.Post.objects.create(Tytul=tytul,Tresc=tresc)
+        messages.success(request,'Dodano Post')
+        return redirect('details')
