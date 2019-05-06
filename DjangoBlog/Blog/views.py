@@ -56,7 +56,13 @@ def search(request):
 
 def post(request,post_id):
     post= models.Post.objects.get(IDPost=post_id)
-    return render(request,'Blog/post.html',{'post':post})
+    if post.Haslo:
+        if request.session['verification'] == 'verified':
+            return render(request,'Blog/post.html',{'post':post})
+        else:
+            return redirect('home')
+    else:
+        return render(request,'Blog/post.html')
 
 
 
@@ -81,13 +87,26 @@ def editOpis(request):
         messages.success(request,'Opis zmieniono')
         return redirect('profile')
 
-def newPost(request):
+def newPost(request,blog_id):
     if request.method == 'POST':
         tytul = request.POST.get('NewPostTitle',False)
         tresc = request.POST.get('NewPostContent',False)
+        b = models.Blog.objects.get(IDBlog = blog_id)
         if request.POST.get('NewPostPassword',False) != '':
             haslo = request.POST.get('NewPostPassword',False)
-            nowyPost = models.Post.objects.create(Tytul=tytul,Tresc=tresc,Haslo=haslo)
-        nowyPost = models.Post.objects.create(Tytul=tytul,Tresc=tresc)
+            nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc,Haslo=haslo)
+        else :
+            nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc)
         messages.success(request,'Dodano Post')
-        return redirect('details')
+        return redirect('/profile/'+str(blog_id)+'/details')
+def Password(request,post_id):
+    if request.method == 'POST':
+        haslo = request.POST.get('PasswordCheck',False)
+        post = models.Post.objects.get(IDPost=post_id)
+        request.session['verification'] = 'NOTverified'
+        if post.Haslo == haslo:
+            request.session['verification'] = 'verified'
+            return redirect('/post/'+str(post_id)+'/')
+        else:          
+            messages.error(request,'Podano błędne hasło')
+            return redirect('home')

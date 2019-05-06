@@ -8,18 +8,18 @@
 <div class="media">
         <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="">
         <div class="media-body">
-          <h4 class="mt-0">{{post.Tytul}}   |   {{post.Data}}</h4>
+          <h4 class="mt-0"><strong>{{post.Tytul}}  |   {{post.Data}}</strong></h4>
           <br>
-         {{post.Tresc}}
-        
+         <h5>{{post.Tresc}}</h5>
         </div>
       </div>
-      <br>
       <button type="button" class="btn btn-info">Edytuj Post</button>
+      
       <!-- Button trigger modal -->
 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#UsunPost{{post.IDPost}}">
     Usuń Post
   </button>
+  <br><br>
   
   <!-- Modal -->
   <div class="modal" id="UsunPost{{post.IDPost}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -48,7 +48,7 @@
 <!-- Przycisk dodajacy Post -->
 
   <!-- Wywołanie formularza do nowego posta -->
-<form action="/newPost/" method="post">
+<form action="/profile/{{blog.IDBlog}}/newPost/" method="post">
   {% csrf_token %}
 <div class="modal" id="DodajPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -64,7 +64,7 @@
           <label for="NewPostForm">Podaj Tytuł Posta</label>
           <input type="text" class="form-control" id="NewPostForm" name="NewPostTitle" placeholder="Wprowadź tytuł" >
           <label for="NewPostTrescForm">Podaj Treść Posta</label>
-          <input type="text" class="form-control" id="NewPostTrescForm" name="NewPostContent" placeholder="Wprowadź treść" >
+          <textarea type="text" style="min-height:300px" class="form-control" id="NewPostTrescForm" name="NewPostContent" placeholder="Wprowadź treść" ></textarea>
           <label for="NewPostForm">Podaj Hasło Posta</label>
           <input type="text" class="form-control" id="NewPostForm" name="NewPostPassword" placeholder="Wprowadź hasło(opcjonalne)" >
         </div> 
