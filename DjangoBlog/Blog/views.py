@@ -25,7 +25,7 @@ def registration(request):
         return render(request,'Blog/registration.html',{'form': Form})
 
 def home(request):
-    posts = models.Post.objects.all()
+    posts = models.Post.objects.all().order_by('-Data')
     return render(request,"Blog/home.html",{'posts': posts})
 
 def profile(request):
@@ -40,9 +40,9 @@ def search(request):
             messages.error(request,'You need to write what are you looking for')
             return render(request,'Blog/search.html')
         fraza=request.GET.get('search')
-        typ=request.GET['typ']
+        typ=request.GET.get('typ',False)
         if typ=='Post':
-            posty=models.Post.objects.filter(Tytul__contains=fraza)
+            posty=models.Post.objects.filter(Tytul__contains=fraza).order_by('-Data')
             messages.success(request,f'There are {posty.count()} posts with your phrase')
             return render(request,'Blog/search.html',{'posts':posty,'phase':fraza,'type':typ})            
         else:
@@ -55,14 +55,21 @@ def search(request):
         
 
 def post(request,post_id):
-    post= models.Post.objects.get(IDPost=post_id)
-    if post.Haslo:
-        if request.session['verification'] == 'verified':
+    post = models.Post.objects.get(IDPost=post_id)
+    if request.method == 'POST':
+        haslo = request.POST.get('PasswordCheck',False)
+        if post.Haslo == haslo:
             return render(request,'Blog/post.html',{'post':post})
         else:
+            messages.error(request,'Podano błędne hasło')
             return redirect('home')
     else:
-        return render(request,'Blog/post.html')
+        if post.Haslo!='':
+            messages.error(request,'Post chroniony hasłem')
+            return redirect('home')
+        else:
+            return render(request,'Blog/post.html',{'post':post})
+
 
 
 
@@ -77,6 +84,7 @@ def newBlog(request):
         nowyBlog = models.Blog.objects.create(Nazwa=name,IDAutor=request.user)
         messages.success(request,'Dodano Blog')
         return redirect('profile')
+
 def editOpis(request):
     if request.method == 'POST':
         opis = request.POST.get('OpisForm',False)
@@ -99,14 +107,3 @@ def newPost(request,blog_id):
             nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc)
         messages.success(request,'Dodano Post')
         return redirect('/profile/'+str(blog_id)+'/details')
-def Password(request,post_id):
-    if request.method == 'POST':
-        haslo = request.POST.get('PasswordCheck',False)
-        post = models.Post.objects.get(IDPost=post_id)
-        request.session['verification'] = 'NOTverified'
-        if post.Haslo == haslo:
-            request.session['verification'] = 'verified'
-            return redirect('/post/'+str(post_id)+'/')
-        else:          
-            messages.error(request,'Podano błędne hasło')
-            return redirect('home')

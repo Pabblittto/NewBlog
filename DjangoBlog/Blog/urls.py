@@ -16,7 +16,6 @@ urlpatterns = [
     path('profile/<int:blog_id>/details/', views.details, name='details'),
     path('post/<int:post_id>/', views.post, name='post'),
     path('profile/<int:blog_id>/newPost/',views.newPost,name='newPost'),
-    path('<int:post_id>/password/',views.Password,name='Password'),
     path('newBlog/',views.newBlog,name='newBlog'),
     path('editOpis/',views.editOpis,name='editOpis'),
     path('newPost/',views.newPost,name='newPost')
