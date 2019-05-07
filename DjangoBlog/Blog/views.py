@@ -25,7 +25,7 @@ def registration(request):
         return render(request,'Blog/registration.html',{'form': Form})
 
 def home(request):
-    posts = models.Post.objects.all()
+    posts = models.Post.objects.all().order_by('-Data')
     return render(request,"Blog/home.html",{'posts': posts})
 
 def profile(request):
@@ -40,9 +40,9 @@ def search(request):
             messages.error(request,'You need to write what are you looking for')
             return render(request,'Blog/search.html')
         fraza=request.GET.get('search')
-        typ=request.GET['typ']
+        typ=request.GET.get('typ',False)
         if typ=='Post':
-            posty=models.Post.objects.filter(Tytul__contains=fraza)
+            posty=models.Post.objects.filter(Tytul__contains=fraza).order_by('-Data')
             messages.success(request,f'There are {posty.count()} posts with your phrase')
             return render(request,'Blog/search.html',{'posts':posty,'phase':fraza,'type':typ})            
         else:
@@ -64,7 +64,11 @@ def post(request,post_id):
             messages.error(request,'Podano błędne hasło')
             return redirect('home')
     else:
-        return render(request,'Blog/post.html',{'post':post})
+        if post.Haslo!='':
+            messages.error(request,'Post chroniony hasłem')
+            return redirect('home')
+        else:
+            return render(request,'Blog/post.html',{'post':post})
 
 
 
@@ -80,6 +84,7 @@ def newBlog(request):
         nowyBlog = models.Blog.objects.create(Nazwa=name,IDAutor=request.user)
         messages.success(request,'Dodano Blog')
         return redirect('profile')
+
 def editOpis(request):
     if request.method == 'POST':
         opis = request.POST.get('OpisForm',False)
