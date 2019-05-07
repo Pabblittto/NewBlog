@@ -103,8 +103,21 @@ def newPost(request,blog_id):
             nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc)
         messages.success(request,'Dodano Post')
         return redirect('/profile/'+str(blog_id)+'/details')
-def delete(request,blog_id,post_id):
+def postDelete(request,blog_id,post_id):
     b = models.Blog.objects.get(IDBlog = blog_id)
-    post = models.Post.objects.get(IDPost = post_id).delete()
+    if b.IDAutor == request.user:
+        post = models.Post.objects.get(IDPost = post_id).delete()
+        posts = models.Post.objects.filter(IDBlog = blog_id)
+        messages.error(request,"Usunięto Post")
+        return redirect('/profile/'+str(blog_id)+'/details/')
+    return redirect('home')
+
+def blogDelete(request,blog_id):
+    b = models.Blog.objects.get(IDBlog = blog_id)
     posts = models.Post.objects.filter(IDBlog = blog_id)
-    return redirect('/profile/'+str(blog_id)+'/details/')
+    if b.IDAutor == request.user:
+        blog = models.Blog.objects.get(IDBlog = blog_id).delete()
+        messages.success(request,"Usunięto Blog")
+        return redirect('profile')
+    else:
+        return redirect('home')

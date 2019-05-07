@@ -19,7 +19,8 @@ urlpatterns = [
     path('newBlog/',views.newBlog,name='newBlog'),
     path('editOpis/',views.editOpis,name='editOpis'),
     path('newPost/',views.newPost,name='newPost'),
-    path('delete/<int:blog_id>/<int:post_id>',views.delete,name='delete')
+    path('delete/<int:blog_id>/<int:post_id>',views.postDelete,name='postDelete'),
+    path('blog/<int:blog_id>/delete',views.blogDelete,name='blogDelete')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

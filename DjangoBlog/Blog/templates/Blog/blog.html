@@ -80,14 +80,14 @@
 </div>
 </form>
 <br><br>
-<button type="button" class="btn btn-danger" style="float: right" data-toggle="modal" data-target="#exampleModalCentered">
+<button type="button" class="btn btn-danger" style="float: right" data-toggle="modal" data-target="#blogDeleteModal">
     Usuń Blog
   </button>
   
   <!-- Wywołanie formularza do nowego bloga -->
-  <form action="/accounts/register/" method="post">
+  <form action="/blog/{{blog.IDBlog}}/delete" method="post">
     {% csrf_token %}
-  <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+  <div class="modal" id="blogDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
