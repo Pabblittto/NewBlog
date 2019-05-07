@@ -22,6 +22,7 @@
   <br><br>
   
   <!-- Modal -->
+  <form action="/delete/{{blog.IDBlog}}/{{post.IDPost}}">
   <div class="modal" id="UsunPost{{post.IDPost}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -36,7 +37,8 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-          <button type="button" class="btn btn-primary">Usuń</button>
+          <input type="submit" class="btn btn-primary">
+        </form>
         </div>
       </div>
     </div>

@@ -69,10 +69,6 @@ def post(request,post_id):
             return redirect('home')
         else:
             return render(request,'Blog/post.html',{'post':post})
-
-
-
-
 def details(request, blog_id):
     b = models.Blog.objects.get(IDBlog = blog_id)
     posts = models.Post.objects.filter(IDBlog = blog_id)
@@ -107,3 +103,8 @@ def newPost(request,blog_id):
             nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc)
         messages.success(request,'Dodano Post')
         return redirect('/profile/'+str(blog_id)+'/details')
+def delete(request,blog_id,post_id):
+    b = models.Blog.objects.get(IDBlog = blog_id)
+    post = models.Post.objects.get(IDPost = post_id).delete()
+    posts = models.Post.objects.filter(IDBlog = blog_id)
+    return redirect('/profile/'+str(blog_id)+'/details/')
