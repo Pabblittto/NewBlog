@@ -4,6 +4,7 @@ from . import models
 from . import form
 from .form import LoginForm
 from .form import CustomRegisterForm
+from .form import ChangeImageForm
 # Create your views here.
 
 def registration(request):
@@ -192,12 +193,23 @@ def passwordDelete(request,post_id):
     else:
         messages.error(request,"Stare haslo niewlasciwe")
     return redirect('postEdit',post_id)
-def newImage(request,post_id):
-    post = models.Post.objects.get(IDPost = post_id)
-    
-    post.save()
+def newImage(request):
+    if request.method == 'POST':
+        Zmiana=ChangeImageForm(request.POST, request.FILES, instance=request.Profil)
+        if Zmiana.is_valid():
+            Zmiana.save()
+            messages.success(request,"ALE ZAPIERDALA :D")
+            return redirect('profile')
+    else:
+        Zmiana=ChangeImageForm(instance=request.Profil)
+
+    context={
+            'Zmiana':Zmiana
+            }
     messages.success(request,"To nie działa :D")
-    return redirect('postEdit',post_id)
+    return redirect('profile')
+
+
 def newComent(request,post_id):
     if request.user.is_authenticated:
         post = models.Post.objects.get(IDPost = post_id)
