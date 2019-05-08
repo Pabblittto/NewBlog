@@ -56,10 +56,18 @@ def search(request):
 
 def post(request,post_id):
     post = models.Post.objects.get(IDPost=post_id)
+    komentarze = models.Komentarz.objects.filter(IDPost=post_id)
+    for k in komentarze:
+        print(k.Tresc)
+        print(k.Data)
+        print(k.IDKomentarz)
+        print(k.IDUzytkownik)
+        print(k.IDPost)
+        print(k.IDPost.Tresc)
     if request.method == 'POST':
         haslo = request.POST.get('PasswordCheck',False)
         if post.Haslo == haslo:
-            return render(request,'Blog/post.html',{'post':post})
+            return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})
         else:
             messages.error(request,'Podano błędne hasło')
             return redirect('home')
@@ -68,7 +76,7 @@ def post(request,post_id):
             messages.error(request,'Post chroniony hasłem')
             return redirect('home')
         else:
-            return render(request,'Blog/post.html',{'post':post})
+            return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})
 def details(request, blog_id):
     b = models.Blog.objects.get(IDBlog = blog_id)
     posts = models.Post.objects.filter(IDBlog = blog_id)
@@ -190,3 +198,10 @@ def newImage(request,post_id):
     post.save()
     messages.success(request,"To nie działa :D")
     return redirect('postEdit',post_id)
+def newComent(request,post_id):
+    if request.user.is_authenticated:
+        post = models.Post.objects.get(IDPost = post_id)
+        tresc = request.POST.get('NewComent')
+        new = models.Komentarz.objects.create(IDUzytkownik=request.user,IDPost = post,Tresc=tresc)
+    return redirect('post',post_id)
+

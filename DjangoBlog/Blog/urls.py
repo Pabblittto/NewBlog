@@ -27,7 +27,8 @@ urlpatterns = [
     path('post/<int:post_id>/edit/newPassword/',views.postNewPassword,name='postNewPassword'),
     path('post/<int:post_id>/edit/password/',views.password,name='password'),
     path('post/<int:post_id>/edit/deletePassword/',views.passwordDelete,name='passwordDelete'),
-    path('post/<int:post_id>/edit/newImage/',views.newImage,name='newImage')
+    path('post/<int:post_id>/edit/newImage/',views.newImage,name='newImage'),
+    path('post/<int:post_id>/newComent/',views.newComent,name='newComent')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
