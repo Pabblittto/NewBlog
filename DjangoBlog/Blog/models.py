@@ -24,6 +24,15 @@ class Profil(models.Model):
     User=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     Zdjecie=models.ImageField(default='aaa.png',upload_to='Profilowe')
     Opis=models.CharField(max_length=1000)
+    #to powinno reskalowac obraz, wartosci do zmian
+    def save(self):
+        super().save()
+        temp=Image.open(self.Zdjecie.path)
+        if temp.height>500 or temp.width>500:
+            output_size=(500,500)
+            temp.thumbnail(output_size)
+            temp.save(self.Zdjecie.path)
+
 
 class Komentarz(models.Model):
     IDKomentarz=models.AutoField(primary_key=True)
