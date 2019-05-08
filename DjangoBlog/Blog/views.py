@@ -121,3 +121,72 @@ def blogDelete(request,blog_id):
         return redirect('profile')
     else:
         return redirect('home')
+def postEdit(request,post_id):
+    post = models.Post.objects.get(IDPost = post_id)
+    return render(request,'Blog/edit.html', {'post': post})
+def postEditTitle(request,post_id):
+    post = models.Post.objects.get(IDPost = post_id)
+    tytul = request.POST.get('TytulForm')
+    post.Tytul = tytul
+    post.save()
+    return redirect('postEdit',post_id)
+def postEditContent(request,post_id):
+    post = models.Post.objects.get(IDPost = post_id)
+    tresc = request.POST.get('ContentForm')
+    post.Tresc = tresc
+    post.save()
+    return redirect('postEdit',post_id)
+def postNewPassword(request,post_id):
+    post = models.Post.objects.get(IDPost = post_id)
+    pass1 = request.POST.get('NewPasswordForm')
+    pass2 = request.POST.get('NewPasswordConfirmForm')
+    if pass1 == pass2:
+        l = len(pass1)
+        if l<=8:
+            post.Haslo = pass1
+            post.save()
+        else:
+            messages,error(request,"Haslo jest za dlugie(max 8 znakow)")
+    else:
+        messages.error(request,"Podano dwa różne hasła")
+    return redirect('postEdit',post_id)
+
+def password(request,post_id):
+    post = models.Post.objects.get(IDPost = post_id)
+    haslo = request.POST.get('OldPasswordForm')
+    pass1 = request.POST.get('PasswordForm')
+    pass2 = request.POST.get('PasswordConfirmForm')
+    if post.Haslo == haslo:
+        if pass1 == pass2:
+            l = len(pass1)
+            if l<=8:
+                post.Haslo = pass1
+                post.save()
+                messages.success(request,"Haslo zmienione")
+            else:
+                messages.error(request,"Haslo jest za dlugie(max 8 znakow)")
+        else:
+            messages.error(request,"Podano dwa różne hasła")
+    else:
+            messages.error(request,"Stare haslo niewlasciwe")
+    return redirect('postEdit',post_id)
+
+def passwordDelete(request,post_id):
+    post = models.Post.objects.get(IDPost = post_id)
+    haslo = post.Haslo
+    confirm = request.POST.get('PasswordForm')
+    print(confirm)
+    print(haslo)
+    if haslo == confirm:
+        post.Haslo = ''
+        post.save()
+        messages.success(request,"Haslo usuniete")
+    else:
+        messages.error(request,"Stare haslo niewlasciwe")
+    return redirect('postEdit',post_id)
+def newImage(request,post_id):
+    post = models.Post.objects.get(IDPost = post_id)
+    
+    post.save()
+    messages.success(request,"To nie działa :D")
+    return redirect('postEdit',post_id)

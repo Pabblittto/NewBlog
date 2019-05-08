@@ -19,8 +19,15 @@ urlpatterns = [
     path('newBlog/',views.newBlog,name='newBlog'),
     path('editOpis/',views.editOpis,name='editOpis'),
     path('newPost/',views.newPost,name='newPost'),
-    path('delete/<int:blog_id>/<int:post_id>',views.postDelete,name='postDelete'),
-    path('blog/<int:blog_id>/delete',views.blogDelete,name='blogDelete')
+    path('delete/<int:blog_id>/<int:post_id>/',views.postDelete,name='postDelete'),
+    path('blog/<int:blog_id>/delete/',views.blogDelete,name='blogDelete'),
+    path('post/<int:post_id>/edit/',views.postEdit,name='postEdit'),
+    path('post/<int:post_id>/edit/title/',views.postEditTitle,name='postEditTitle'),
+    path('post/<int:post_id>/edit/content/',views.postEditContent,name='postEditContent'),
+    path('post/<int:post_id>/edit/newPassword/',views.postNewPassword,name='postNewPassword'),
+    path('post/<int:post_id>/edit/password/',views.password,name='password'),
+    path('post/<int:post_id>/edit/deletePassword/',views.passwordDelete,name='passwordDelete'),
+    path('post/<int:post_id>/edit/newImage/',views.newImage,name='newImage')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
