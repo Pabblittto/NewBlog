@@ -112,6 +112,7 @@ def newPost(request,blog_id):
             nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc)
         messages.success(request,'Dodano Post')
         return redirect('/profile/'+str(blog_id)+'/details')
+        
 def postDelete(request,blog_id,post_id):
     b = models.Blog.objects.get(IDBlog = blog_id)
     if b.IDAutor == request.user:
