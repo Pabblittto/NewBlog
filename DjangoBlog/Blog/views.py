@@ -241,7 +241,6 @@ def default_pic(request):
                 os.remove(wywal_plik)
             except FileNotFoundError:
                 pass # jakk nie ma pliku to w sumie nic sie nie dzieje bo i tak go niie chcemy
-                
             profil.Zdjecie='Profilowe/default_pic.jpg'
             profil.save()
             messages.success(request,'Usunieto obrazek z bazy')
@@ -259,6 +258,3 @@ def newComent(request,post_id):
         tresc = request.POST.get('NewComent')
         new = models.Komentarz.objects.create(IDUzytkownik=request.user,IDPost = post,Tresc=tresc)
     return redirect('post',post_id)
-
-def ProjectDir(string):#funkcja zwraca scezke do plikku ktory powinien zostac usuniety z projektu - 
-    pass
