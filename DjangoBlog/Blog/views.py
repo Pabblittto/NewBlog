@@ -5,6 +5,7 @@ from . import form
 from .form import LoginForm
 from .form import CustomRegisterForm
 from .form import ChangeImageForm
+import os
 # Create your views here.
 
 def registration(request):
@@ -33,7 +34,11 @@ def profile(request):
     if request.user.is_authenticated:
         p = models.Profil.objects.get(User=request.user)
         b = models.Blog.objects.filter(IDAutor = request.user)
-    return render(request,"Blog/profile.html",{'account': p, 'blogs':b})
+        return render(request,"Blog/profile.html",{'account': p, 'blogs':b})
+    else:
+        messages.error(request,'Nie jesteś zalogowany !')
+        return redirect('home')
+
 
 def search(request):
     if (request.method=='GET'):
@@ -112,7 +117,7 @@ def newPost(request,blog_id):
             nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc)
         messages.success(request,'Dodano Post')
         return redirect('/profile/'+str(blog_id)+'/details')
-        
+
 def postDelete(request,blog_id,post_id):
     b = models.Blog.objects.get(IDBlog = blog_id)
     if b.IDAutor == request.user:
@@ -194,21 +199,58 @@ def passwordDelete(request,post_id):
     else:
         messages.error(request,"Stare haslo niewlasciwe")
     return redirect('postEdit',post_id)
+
+
 def newImage(request):
     if request.method == 'POST':
-        Zmiana=ChangeImageForm(request.POST, request.FILES, instance=request.Profil)
-        if Zmiana.is_valid():
-            Zmiana.save()
-            messages.success(request,"ALE ZAPIERDALA :D")
+        if 'Zdjecie' in request.POST :
+            messages.error(request,"Najpierw wybierz obraz")
+            return redirect('profile')
+        profil= models.Profil.objects.get(User=request.user)
+        nazwaObrazka=profil.Zdjecie.url # to przechowuje nazwe pliku
+        Obrazek_z_forma=ChangeImageForm(request.POST,request.FILES, instance=profil)           
+        if Obrazek_z_forma.is_valid():
+            #usuwanie obrazka z bazy jezeli nie jest obrazkiem domyslnym
+            if nazwaObrazka!='/Obrazki/Profilowe/default_pic.jpg':
+                tmp= os.getcwd()
+                nazwaObrazka= nazwaObrazka.replace("/","\\")
+                wywal_plik=tmp+nazwaObrazka
+                try:
+                    os.remove(wywal_plik)
+                except FileNotFoundError:
+                    pass # jakk nie ma pliku to w sumie nic sie nie dzieje bo i tak go niie chcemy
+            Obrazek_z_forma.save()
+            messages.success(request,"Obrazek zaktualizowano")
+            return redirect('profile')
+    else:#ktoś wbił tu z palca
+        return redirect('profile') 
+
+
+def default_pic(request):
+    if request.user.is_authenticated:# jezeli jest zalogowany
+        profil= models.Profil.objects.get(User=request.user)
+        NazwaObrazkaZBazy=profil.Zdjecie.url
+        if NazwaObrazkaZBazy=='/Obrazki/Profilowe/default_pic.jpg':# obrazej juz jest defaultowy!
+            messages.error(request,'Obrazek juz jest ustawiony na domyślny')
+            return redirect('profile')
+        else:    
+            tmp= os.getcwd()
+            NazwaObrazkaZBazy= NazwaObrazkaZBazy.replace("/","\\")
+            wywal_plik=tmp+NazwaObrazkaZBazy
+            try:
+                os.remove(wywal_plik)
+            except FileNotFoundError:
+                pass # jakk nie ma pliku to w sumie nic sie nie dzieje bo i tak go niie chcemy
+                
+            profil.Zdjecie='Profilowe/default_pic.jpg'
+            profil.save()
+            messages.success(request,'Usunieto obrazek z bazy')
             return redirect('profile')
     else:
-        Zmiana=ChangeImageForm(instance=request.Profil)
+        messages.error(request,'Nie jesteś zalogowany!')
+        return  redirect('home')
 
-    context={
-            'Zmiana':Zmiana
-            }
-    messages.success(request,"To nie działa :D")
-    return redirect('profile')
+    
 
 
 def newComent(request,post_id):
@@ -218,3 +260,5 @@ def newComent(request,post_id):
         new = models.Komentarz.objects.create(IDUzytkownik=request.user,IDPost = post,Tresc=tresc)
     return redirect('post',post_id)
 
+def ProjectDir(string):#funkcja zwraca scezke do plikku ktory powinien zostac usuniety z projektu - 
+    pass

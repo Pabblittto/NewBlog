@@ -1,78 +1,99 @@
 {%extends 'Blog/base.html'%}
 {%block content%}
-    <h2>Witaj {{account.User.username}}</h2>
-    <br>
-    <h6>Opis: {{account.Opis}}</h6>
-    <br><br>
-        <div class="form-group">
-            <img src="/Obrazki/{{account.Zdjecie}}">
-            {%block tmp%}
-            <label for="formGroupExampleInput">Zmień zdjęcie</label>
-            <div class="input-group">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile04">
-                    <label class="custom-file-label" for="inputGroupFile04">Choose file</label>
-                </div>
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button">Button</button>
-                </div>
-            </div>
-            <form action="/editOpis/" method="post">
-              {% csrf_token %}
-            <div class="form-group">
-                <label for="OpisForm">Zmień Opis</label>
-                <input type="text" class="form-control" id="OpisForm" name="OpisForm" placeholder="Wprowadź nowy opis">
-            </div>
-            <input type="submit" style="float:right" class="btn btn-info" id="OpisFormBtn">
-          </form>
-            <div style="clear:both"></div>
-<!-- Lista blogów użytkownika--> 
+<div class="row">
+  <div class="col-7"><!-- czesc z lista blogow-->
+    {%if blogs%}
+    <nav class="nav flex-column">
+            <ul class="list-group" >
+            {%for blog in blogs%}
+            <a class="nav-link" href="{{blog.IDBlog}}/details">
+              <div class="">
+                <li class="list-group-item hovered">{{blog.Nazwa}}</li>
+              </div>
+            </a>
+            {%endfor%}
+            </ul>
+          </nav>
+          <br>
+          {%else%}
+          <h4>Nie masz żadnych blogów</h4>
+          {%endif%}
 
-{%if blogs%}
-<nav class="nav flex-column">
-        <ul class="list-group mr-auto">
-        {%for blog in blogs%}
-        <li class="list-group-item"><a class="nav-link" href="{{blog.IDBlog}}/details">{{blog.Nazwa}}</a></li>
+    <!-- Przycisk dodajacy bloga -->
 
-        {%endfor%}
-        </ul>
-      </nav>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCentered">
+      Dodaj Blog
+    </button>
+  </div>
+
+  <div class="col-5"><!-- czesc z obrazkiem i opisem-->
+      <h2>Witaj {{account.User.username}}</h2>
       <br>
-      {%else%}
-      <h4>Nie masz żadnych blogów</h4>
-      {%endif%}
+          <div class="form-group">
+            <div ><!-- div na obrazek-->
+              <img src="/Obrazki/{{account.Zdjecie}}"  height="500">
+            </div>  
+            <div>
+              <h6>Opis: {{account.Opis}}</h6>
+            </div>
+            <br>
+            <div class="row">
+                <form action="{% url 'newImage' %}" method="POST" enctype="multipart/form-data">
+                  <div class="row">
+                      {% csrf_token %}
+                        <input type="file" name="Zdjecie" accept="image/png, image/jpeg">
+                        <button class="btn btn-outline-secondary" type="submit">Zmień Obraz</button>
+                  </div>
+                </form><!-- zmiana obrazka!!!!-->  
+              <div class="col"><!--kolumna dla przyciksu "usun zdjecie"-->
+                <form action="{% url 'default_pic' %}" method="GET">
+                  <button type="submit" class="btn btn-outline-secondary"> Usuń Zdjęcie</button>
+                </form>  
+              </div>
+            </div>    
+          </div>
+              <form action="/editOpis/" method="post">
+              <div class="row">    
+                  {% csrf_token %}
+                    <label for="OpisForm">Zmień Opis</label>
+                  <div class="col">    
+                      <input type="text" class="form-control" id="OpisForm" name="OpisForm" placeholder="Wprowadź nowy opis">
+                  </div>
+                  <div class="col-2">
+                    <input type="submit" style="float:right" class="btn btn-info" id="OpisFormBtn">
+                  </div> 
+              </div>     
+              </form>
+               
+              <div style="clear:both"></div>
+  <!-- Lista blogów użytkownika--> 
+  </div>
 
-<!-- Przycisk dodajacy bloga -->
-
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCentered">
-  Dodaj Blog
-</button>
-
-<!-- Wywołanie formularza do nowego bloga -->
-<form action="/newBlog/" method="post">
-  {% csrf_token %}
-<div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenteredLabel">Dodaj Blog</h5>
-        <input type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="NewBlogForm">Podaj Nazwę Bloga</label>
-          <input type="text" class="form-control" id="NewBlogName" name="NewBlogName" placeholder="Wprowadź tytuł" >
-        </div> 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-        <input type="submit" class="btn btn-primary" id="NewBlogCreation" >
+  <!-- Wywołanie formularza do nowego bloga -->
+  <form action="/newBlog/" method="post">
+    {% csrf_token %}
+  <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenteredLabel">Dodaj Blog</h5>
+          <input type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="NewBlogForm">Podaj Nazwę Bloga</label>
+            <input type="text" class="form-control" id="NewBlogName" name="NewBlogName" placeholder="Wprowadź tytuł" >
+          </div> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+          <input type="submit" class="btn btn-primary" id="NewBlogCreation" >
+        </div>
       </div>
     </div>
   </div>
+  </form>
 </div>
-</form>
-{%endblock%}
 {%endblock%}
