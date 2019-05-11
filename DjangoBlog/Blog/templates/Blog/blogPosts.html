@@ -1,0 +1,29 @@
+{%extends 'Blog/base.html'%}
+{%block content%}
+<div class="row"><!-- content-->
+    <div class="col-8"><!-- lista postów-->
+        <div class="text-center"><!-- tytul bloga!!-->
+            <h2>{{blog.Nazwa}}</h2>
+        </div>
+        ale najpierw musze ogarnac dodawanie zdjec do postow wtedy bedzie jako tako, i sie walnie wyglad jak na wykopie
+        {% for post in posts%}
+
+
+        {%endfor%}<!--for do wyswietlania postow-->
+    </div>
+    <div class="col-4"><!--info o autorze-->
+        <div class=" text-center">
+            <h5>Autor: {{user.username}}</h5>
+        </div>
+        <div><!-- obrazekkkk-->
+            <img src="/Obrazki/{{profil.Zdjecie}}" style="height:300px"/>
+        </div>
+        <div><!-- opis profilu-->
+            <p>{{profil.Opis}}</p>
+        </div>
+    </div>
+
+
+
+</div>
+{%endblock%}

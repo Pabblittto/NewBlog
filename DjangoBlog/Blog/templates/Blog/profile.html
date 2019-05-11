@@ -27,11 +27,13 @@
   </div>
 
   <div class="col-5"><!-- czesc z obrazkiem i opisem-->
-      <h2>Witaj {{account.User.username}}</h2>
+      <div class="text-center">
+         <h2>Witaj {{account.User.username}}</h2>
+      </div>
       <br>
           <div class="form-group">
-            <div ><!-- div na obrazek-->
-              <img src="/Obrazki/{{account.Zdjecie}}"  height="500">
+            <div class="text-center" ><!-- div na obrazek-->
+              <img src="/Obrazki/{{account.Zdjecie}}"  height="300">
             </div>  
             <div>
               <h6>Opis: {{account.Opis}}</h6>

@@ -249,8 +249,6 @@ def default_pic(request):
         messages.error(request,'Nie jesteś zalogowany!')
         return  redirect('home')
 
-    
-
 
 def newComent(request,post_id):
     if request.user.is_authenticated:
@@ -258,3 +256,13 @@ def newComent(request,post_id):
         tresc = request.POST.get('NewComent')
         new = models.Komentarz.objects.create(IDUzytkownik=request.user,IDPost = post,Tresc=tresc)
     return redirect('post',post_id)
+
+def blog(request,blog_id):
+    posts= models.Post.objects.filter(IDBlog=blog_id)# wczytywanie plstow z bloga
+    blog= models.Blog.objects.get(IDBlog=blog_id)
+    user=blog.IDAutor
+    profil= models.Profil.objects.get(User=user)
+    return render(request,'Blog/blogPosts.html',{'profil':profil,'posts':posts,'blog':blog,'user':user})
+
+def PostnewImage(request):
+    Exception

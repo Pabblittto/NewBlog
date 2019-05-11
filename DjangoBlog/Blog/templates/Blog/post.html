@@ -4,8 +4,8 @@
 <div class="media">
   <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="">
   <div class="media-body">
-    <a class="nav-item" href="#"><h5 class="mt-0">{{post.Tytul}}</h5></a>
-    <h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong> | {{post.Data}}</h6>
+    <h5 class="mt-0">{{post.Tytul}}</h5>
+    <a class="" href="/blog/{{post.IDBlog.IDBlog}}"><h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong> </a> | {{post.Data}}</h6>
     <p style="float:left;max-width:50%;">{{post.Tresc}}</p>
     {%if post.Obraz%}
       <img src="/Obrazki/{{post.Obraz}}" style="float:right;max-width: 50%;">

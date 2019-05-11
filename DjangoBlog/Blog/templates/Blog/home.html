@@ -35,11 +35,10 @@
             </div>
           </div>
         </div>
-     
       {%else%}
       <a class="nav-item" href="post/{{post.IDPost}}"><h5 class="mt-0">{{post.Tytul}}</h5></a>
       {%endif%}
-      <h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong> | {{post.Data}}</h6>
+      <a href="/blog/{{post.IDBlog.IDBlog}}" ><h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong></a> | {{post.Data}}</h6>
       <br>
   </div>
 </div>

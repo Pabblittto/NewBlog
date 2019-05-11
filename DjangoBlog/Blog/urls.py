@@ -27,8 +27,9 @@ urlpatterns = [
     path('post/<int:post_id>/edit/newPassword/',views.postNewPassword,name='postNewPassword'),
     path('post/<int:post_id>/edit/password/',views.password,name='password'),
     path('post/<int:post_id>/edit/deletePassword/',views.passwordDelete,name='passwordDelete'),
-    #path('post/<int:post_id>/edit/newImage/',views.newImage,name='newImage'), # to moze trzeba zmenic troche
+    path('post/<int:post_id>/edit/newImage/',views.PostnewImage,name='newImage'), # to moze trzeba zmenic troche
     path('newImage/',views.newImage,name='newImage'),
+    path('blog/<int:blog_id>',views.blog,name='blog'),
     path('default_pic/',views.default_pic,name='default_pic'),
     path('post/<int:post_id>/newComent/',views.newComent,name='newComent')
 ]

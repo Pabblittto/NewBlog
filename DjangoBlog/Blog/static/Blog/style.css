@@ -41,7 +41,7 @@
     
     a:hover{
         text-decoration: none;
-        color: white;
+        color: darkslategrey;
     }
     
     .slogan{
@@ -71,9 +71,11 @@
     background-color: var(--color-one);
     
     }
+
     .hovered{
 
     }
     .hovered:hover{
         background-color: darkgrey;
+        color: white;
     }
