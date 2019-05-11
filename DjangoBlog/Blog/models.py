@@ -31,6 +31,15 @@ class Profil(models.Model):
     User=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     Zdjecie=models.ImageField(default='Profilowe/default_pic.jpg',upload_to=path_and_rename)
     Opis=models.CharField(max_length=1000,blank=True)
+    #to cos wczesniej dzialalo ale z dziwnych czesci wycinalo a potem wypierdala ze nie przyjelo obrazka
+    #def save(self):
+       # super().save()
+       # temp=Image.open(self.Zdjecie.path)
+       # if temp.height>500 or temp.width>500:
+        #    width,height=get_image_dimensions(temp)
+       #     temp = temp.crop((height/2-500, width/2-500, width, height))
+       #     temp=temp.resize((500, 500), Image.ANTIALIAS)
+       # temp.save(self.Zdjecie.path)
     #to powinno reskalowac obraz, wartosci do zmian
     #def save(self):
      #   super().save()
