@@ -10,7 +10,7 @@
         <div class="media-body">
           <h4 class="mt-0"><strong>{{post.Tytul}}  |   {{post.Data}}</strong></h4>
           <br>
-         <h5>{{post.Tresc}}</h5>
+         <h5>{{post.Tresc|truncatewords:25}}</h5>
         </div>
       </div>
       <button type="button" class="btn btn-info"><a href="/post/{{post.IDPost}}/edit" style="text-decoration: none">Edytuj Post</a></button>

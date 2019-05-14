@@ -39,6 +39,11 @@
       <a class="nav-item" href="post/{{post.IDPost}}"><h5 class="mt-0">{{post.Tytul}}</h5></a>
       {%endif%}
       <a href="/blog/{{post.IDBlog.IDBlog}}" ><h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong></a> | {{post.Data}}</h6>
+      {%if post.Haslo %}
+        <h6><strong>Tajne</strong></h6>
+      {%else%}
+        <h6>{{post.Tresc|truncatewords:25}}</h6>
+      {%endif%}
       <br>
   </div>
 </div>

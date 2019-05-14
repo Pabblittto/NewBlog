@@ -10,12 +10,12 @@
   <input type="submit" style="float:right" class="btn btn-info" id="TytulFormBtn">
 </form>
 <h4>Zmien Tresc</h4>
-<h6>{{post.Tresc}}</h6>
+<h6 style="white-space: pre-wrap">{{post.Tresc}}</h6>
 <form action="content/" method="post">
   {% csrf_token %}
 <div class="form-group">
     <label for="ContentForm">Zmień Tresc</label>
-    <textarea class="form-control" id="OpisForm" name="ContentForm" style="min-height:300px" placeholder="Wprowadź nowa Tresc">{{post.Tresc}}</textarea>
+    <textarea class="form-control" id="OpisForm" name="ContentForm" style="min-height:300px; " placeholder="Wprowadź nowa Tresc">{{post.Tresc}}</textarea>
 <input type="submit" style="float:right" class="btn btn-info" id="ContentFormBtn">
 </form>
 {%if post.Haslo%}
