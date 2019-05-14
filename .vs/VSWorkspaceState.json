@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\DjangoBlog",
+    "\\DjangoBlog\\Blog"
   ],
+  "SelectedNode": "\\DjangoBlog\\Blog\\models.py",
   "PreviewInSolutionExplorer": false
 }

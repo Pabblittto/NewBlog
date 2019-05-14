@@ -40,8 +40,12 @@ class Profil(models.Model):
         temp=Image.open(self.Zdjecie.path)
         if temp.height>500 or temp.width>500:
             width,height=get_image_dimensions(self.Zdjecie.path)
-            Zapis = temp.crop((height/2-500, width/2-500, width, height))
-            Zapis=Zapis.resize((500, 500), Image.ANTIALIAS)
+            if width>height:
+                Zapis=temp.crop((width/2-height/2,0,width/2+height/2,height))
+            else:
+                Zapis=temp.crop((0,height/2-width/2,width,width/2+height/2))
+            #Zapis = temp.crop((width/2-250, height/2-250, width/2+250, height/2+250))
+           # Zapis=Zapis.resize((500, 500), Image.ANTIALIAS)
             Zapis.save(self.Zdjecie.path)
     #to powinno reskalowac obraz, wartosci do zmian
     #def save(self):
