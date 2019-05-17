@@ -8,6 +8,6 @@
     "\\DjangoBlog\\Blog\\templates\\registration",
     "\\DjangoBlog\\DjangoBlog"
   ],
-  "SelectedNode": "\\DjangoBlog\\Blog\\views.py",
+  "SelectedNode": "\\DjangoBlog\\DjangoBlog\\settings.py",
   "PreviewInSolutionExplorer": false
 }

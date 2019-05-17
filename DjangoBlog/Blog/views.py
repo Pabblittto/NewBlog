@@ -5,6 +5,7 @@ from . import form
 from .form import LoginForm
 from .form import CustomRegisterForm
 from .form import ChangeImageForm
+from django.contrib.auth.models import User
 import os
 from django.core.mail import EmailMessage
 from .tokens import account_activation_token
@@ -22,7 +23,7 @@ def registration(request):
         if Form.is_valid():
             messages.success(request,'Wiadomość z potwierdzeniem została wysłana na podany adres Email')  
             user = Form.save()
-
+            user.is_active = False
             profil = models.Profil.objects.create(User=user,Opis='Tymczasowy Opis')
             profil.save()
             user.Profil = profil
@@ -40,7 +41,7 @@ def registration(request):
                         temat, tresc, to=[odbiorca]
             )
             email.send()
-            #user.is_active = False
+           # user.is_active = False
             return redirect('home')
         else:
             messages.error(request,"Błąd podczas wypełniania formularza")
@@ -58,7 +59,7 @@ def activate(request, uidb64, token):
     if user is not None and account_activation_token.check_token(user, token):
         user.is_active = True
         user.save()
-        login(request, user)
+        #login(request, user)
         messages.success(request,'Konto zostało aktywowane')  
         return redirect('home')
         #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
