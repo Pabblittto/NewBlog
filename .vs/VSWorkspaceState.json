@@ -2,8 +2,12 @@
   "ExpandedNodes": [
     "",
     "\\DjangoBlog",
-    "\\DjangoBlog\\Blog"
+    "\\DjangoBlog\\Blog",
+    "\\DjangoBlog\\Blog\\templates",
+    "\\DjangoBlog\\Blog\\templates\\Blog",
+    "\\DjangoBlog\\Blog\\templates\\registration",
+    "\\DjangoBlog\\DjangoBlog"
   ],
-  "SelectedNode": "\\DjangoBlog\\Blog\\models.py",
+  "SelectedNode": "\\DjangoBlog\\Blog\\views.py",
   "PreviewInSolutionExplorer": false
 }

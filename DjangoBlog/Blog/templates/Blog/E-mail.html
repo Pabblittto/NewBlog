@@ -1,0 +1,6 @@
+{% autoescape off %}
+Witaj {{ user.username }},
+Kliknij na ponizszy link, aby zakonczyc rejestracje konta
+
+http://{{ domena }}{% url 'aktywuj' uidb64=uid token=token %}
+{% endautoescape %}

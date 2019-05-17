@@ -4,6 +4,7 @@ from . import views
 from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,7 +32,8 @@ urlpatterns = [
     path('newImage/',views.newImage,name='newImage'),
     path('blog/<int:blog_id>',views.blog,name='blog'),
     path('default_pic/',views.default_pic,name='default_pic'),
-    path('post/<int:post_id>/newComent/',views.newComent,name='newComent')
+    path('post/<int:post_id>/newComent/',views.newComent,name='newComent'),
+    url(r'^activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', views.activate, name='aktywuj')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

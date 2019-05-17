@@ -6,18 +6,41 @@ from .form import LoginForm
 from .form import CustomRegisterForm
 from .form import ChangeImageForm
 import os
+from django.core.mail import EmailMessage
+from .tokens import account_activation_token
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text
+from django.template.loader import render_to_string
+from email.parser import HeaderParser
+import imaplib
 # Create your views here.
 
 def registration(request):
     if request.method == 'POST':
         Form = CustomRegisterForm(request.POST)
         if Form.is_valid():
-            messages.success(request,'Konto założone')
+            messages.success(request,'Wiadomość z potwierdzeniem została wysłana na podany adres Email')  
             user = Form.save()
+
             profil = models.Profil.objects.create(User=user,Opis='Tymczasowy Opis')
             profil.save()
             user.Profil = profil
             user.save()
+            temat = 'Aktywacja konta'
+            strona=get_current_site(request)
+            tresc = render_to_string('Blog/E-mail.html', {
+                'user': user,
+                'domena': strona.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token':account_activation_token.make_token(user),
+            })
+            odbiorca = user.email
+            email = EmailMessage(
+                        temat, tresc, to=[odbiorca]
+            )
+            email.send()
+            #user.is_active = False
             return redirect('home')
         else:
             messages.error(request,"Błąd podczas wypełniania formularza")
@@ -25,6 +48,24 @@ def registration(request):
     else:
         Form = CustomRegisterForm()
         return render(request,'Blog/registration.html',{'form': Form})
+
+def activate(request, uidb64, token):
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        login(request, user)
+        messages.success(request,'Konto zostało aktywowane')  
+        return redirect('home')
+        #return HttpResponse('Thank you for your email confirmation. Now you can login your account.')
+    else:
+        #return HttpResponse('Activation link is invalid!')
+        messages.success(request,'Potwierdzenie nie powiodło się')  
+        return redirect('home')
 
 def home(request):
     posts = models.Post.objects.all().order_by('-Data')
