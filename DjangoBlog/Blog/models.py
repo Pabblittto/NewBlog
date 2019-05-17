@@ -35,7 +35,7 @@ class Profil(models.Model):
     Zdjecie=models.ImageField(default='Profilowe/default_pic.jpg',upload_to=path_and_rename)
     Opis=models.CharField(max_length=1000,blank=True)
     #to cos dziala ale w dziwny sposob przycina z przesunieciem
-    def save(self):
+    def save(self,force_insert=False, force_update=False, using=None):
         super().save()
         temp=Image.open(self.Zdjecie.path)
         if temp.height>500 or temp.width>500:
