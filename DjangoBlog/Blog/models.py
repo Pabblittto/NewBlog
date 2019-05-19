@@ -15,7 +15,16 @@ def path_and_rename(instance,filename):# funkcja dla profilu aby zmieniac nazwe 
     ext=filename.split('.')
     name=instance.User.username+'.'+ext[-1]
     return os.path.join(path,name)
+
+def path_and_renamePost(instance,filename):# funkcja dla profilu aby zmieniac nazwe przychodzacego pliikku
+    path='Obrazki/'
+    ext=filename.split('.')
+    name='Blog'+str(instance.IDBlog.IDBlog)+'Post'+ str(instance.IDPost)+'.'+ext[-1]
+    return os.path.join(path,name)
+
 # Create your models here.
+
+
 class Blog(models.Model):
     IDBlog=models.AutoField(primary_key=True)
     Nazwa=models.CharField(max_length=128)
@@ -28,7 +37,7 @@ class Post(models.Model):
     Data=models.DateTimeField(default=timezone.now)
     IDBlog=models.ForeignKey(Blog,on_delete=models.CASCADE)
     Haslo=models.CharField(max_length=8,blank=True)
-    Obraz=models.ImageField(upload_to='Obrazki',blank=True)
+    Obraz=models.ImageField(upload_to=path_and_renamePost,default='Obrazki/default_pic.jpg',blank=True)
 
 class Profil(models.Model):
     User=models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)

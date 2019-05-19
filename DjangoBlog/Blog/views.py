@@ -4,7 +4,7 @@ from . import models
 from . import form
 from .form import LoginForm
 from .form import CustomRegisterForm
-from .form import ChangeImageForm
+from .form import ChangeImageForm, ChangeImageFormPost
 from django.contrib.auth.models import User
 import os
 from django.core.mail import EmailMessage
@@ -157,6 +157,20 @@ def newPost(request,blog_id):
             nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc,Haslo=haslo)
         else :
             nowyPost = models.Post.objects.create(IDBlog=b,Tytul=tytul,Tresc=tresc)
+        # i tu dopiero jest ladowanie zdjecia
+            NazwaObrazka= nowyPost.Obraz.url
+        ObrazZForma=ChangeImageFormPost(request.POST,request.FILES,instance=nowyPost)
+        if ObrazZForma.is_valid():
+            if 'Obraz' not in request.POST: # zdjecie zostało wybrane
+                if NazwaObrazka!='/Obrazki/Obrazki/default_pic.jpg':
+                    tmp=os.getcwd()# pobranie sciezki do tego folderu
+                    NazwaObrazka=NazwaObrazka.replace("/","\\")
+                    PlikDoWywalenia=tmp+NazwaObrazka
+                    try:
+                        os.remove(PlikDoWywalenia)
+                    except FileNotFoundError:
+                        pass # jak nie ma pliku to nie szkodzi  
+            ObrazZForma.save()
         messages.success(request,'Dodano Post')
         return redirect('/profile/'+str(blog_id)+'/details')
 
@@ -306,5 +320,26 @@ def blog(request,blog_id):
     profil= models.Profil.objects.get(User=user)
     return render(request,'Blog/blogPosts.html',{'profil':profil,'posts':posts,'blog':blog,'user':user})
 
-def PostnewImage(request):
-    Exception
+def PostnewImage(request,post_id):
+    if request.method == 'POST':
+        if 'Obraz' in request.POST :
+            messages.error(request,"Najpierw wybierz obraz")
+            return redirect('postEdit',post_id)
+        Postobj= models.Post.objects.get(IDPost=post_id)
+        nazwaObrazka=Postobj.Obraz.url # to przechowuje nazwe pliku
+        Obrazek_z_forma=ChangeImageFormPost(request.POST,request.FILES, instance=Postobj)           
+        if Obrazek_z_forma.is_valid():
+            #usuwanie obrazka z bazy jezeli nie jest obrazkiem domyslnym
+            if nazwaObrazka!='/Obrazki/Obrazki/default_pic.jpg':
+                tmp= os.getcwd()
+                nazwaObrazka= nazwaObrazka.replace("/","\\")
+                wywal_plik=tmp+nazwaObrazka
+                try:
+                    os.remove(wywal_plik)
+                except FileNotFoundError:
+                    pass # jakk nie ma pliku to w sumie nic sie nie dzieje bo i tak go niie chcemy
+            Obrazek_z_forma.save()
+            messages.success(request,"Obrazek zaktualizowano")
+            return redirect('postEdit',post_id)
+    else:#ktoś wbił tu z palca
+        return redirect('postEdit',post_id)

@@ -67,12 +67,15 @@
     <input type="text" class="form-control" id="NewPasswordConfirmForm" name="NewPasswordConfirmForm" placeholder="Wprowadź nowe haslo jeszcze raz">
 <input type="submit" style="float:right" class="btn btn-info" id="NewPasswordFormBtn">
 </form>
-<img src="/Obrazki/{{post.Obraz}}">
-<h3>Dodaj Zdjecie</h3>
-<form action="newImage/" method="post">
+{%endif%}
+<h3>Zmień Zdjecie</h3>
+<div class=" text-center">
+<img src="/Obrazki/{{post.Obraz}}" height="500px">
+</div>
+<form action="newImage/" method="post" enctype="multipart/form-data">
   {% csrf_token %}
-<input type="file" name="myfile" /><br/>
+<input type="file" name="Obraz" accept="image/png, image/jpeg" /><br/>
 <input type="submit" style="float:right" class="btn btn-info" id="NewImageBtn">
 </form>
-{%endif%}
+
 {%endblock%}

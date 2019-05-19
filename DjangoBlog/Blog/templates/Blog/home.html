@@ -4,9 +4,17 @@
 <h4>Brak postów do wyświetlenia</h4>
 {%endif%}
 {%for post in posts %}
-<div class="media">
-  <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt=""></img>
-  <div class="media-body">
+<div class="media row">
+  <a href="post/{{post.IDPost}}" class="col-2">
+      <div class=" text-center" style="border-style: dotted">
+          {%if post.Haslo%}
+            <img src="/Obrazki/Obrazki/lock.png" height="100px"/>
+          {%else%}
+            <img src="/Obrazki/{{post.Obraz}}" alt="obrazek" height="100px"/>
+          {%endif%}
+      </div>
+  </a>
+  <div class="media-body col-7">
     {%if post.Haslo%}
     <a class="nav-item" data-toggle="modal" data-target="#exampleModalCentered{{post.IDPost}}" href="">
       <h5 class="mt-0" style="float:left">{{post.Tytul}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>

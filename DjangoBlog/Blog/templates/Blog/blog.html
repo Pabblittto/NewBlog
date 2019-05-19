@@ -50,7 +50,7 @@
 <!-- Przycisk dodajacy Post -->
 
   <!-- Wywołanie formularza do nowego posta -->
-<form action="/profile/{{blog.IDBlog}}/newPost/" method="post" >
+<form action="/profile/{{blog.IDBlog}}/newPost/" method="post" enctype="multipart/form-data" >
   {% csrf_token %}
 <div class="modal" id="DodajPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -69,6 +69,8 @@
           <textarea type="text" style="min-height:300px" class="form-control" id="NewPostTrescForm" name="NewPostContent" placeholder="Wprowadź treść" ></textarea>
           <label for="NewPostForm">Podaj Hasło Posta</label>
           <input type="text" class="form-control" id="NewPostForm" name="NewPostPassword" placeholder="Wprowadź hasło(opcjonalne)" >
+          <label for="NewPostForm">Wybierz obraz</label>
+          <input type="file" name="Obraz" accept="image/png, image/jpeg">
         </div> 
       </div>
       <div class="modal-footer">
