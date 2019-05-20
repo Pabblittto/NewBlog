@@ -79,3 +79,9 @@
         background-color: darkgrey;
         color: white;
     }
+
+    .error-text{
+        color: red;
+        background-color: #f99e90;
+        border-radius: 2px;
+    }
