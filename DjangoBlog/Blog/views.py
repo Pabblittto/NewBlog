@@ -16,6 +16,14 @@ from django.template.loader import render_to_string
 from email.parser import HeaderParser
 import imaplib
 # Create your views here.
+def CzyAktywne(request):
+    if(request.user.is_active==False):
+        messages.error(request,"Konto nie zostało aktywowane")
+        return redirect('home')
+    else:
+        messages.error(request,"Błędny login, lub hasło")
+        return redirect('login')
+
 
 def registration(request):
     if request.method == 'POST':
