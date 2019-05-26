@@ -2,14 +2,19 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Profil, Post
+from django.contrib.auth.forms import AuthenticationForm
 
-class LoginForm(forms.Form):
-    UserName= forms.CharField(max_length=150)
-    password= forms.CharField(widget=forms.PasswordInput(
-        attrs={
-            'class': 'form-control'
-        }
-    ))
+class LoginForm(AuthenticationForm):
+    email = forms.EmailField(required=True)
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = User
+        fields = ('email', 'password')
+    def clean_email(self):
+        data = self.cleaned_data['email']
+        return data.lower()
+   
 
 
 class CustomRegisterForm(UserCreationForm):

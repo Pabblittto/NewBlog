@@ -24,6 +24,23 @@ def CzyAktywne(request):
         messages.error(request,"Błędny login, lub hasło")
         return redirect('login')
 
+def login(request):
+    if request.method == 'POST':
+        login_form = LoginForm(request.POST)
+        if login_form.is_valid():
+            if user.is_active:
+                login_form.save()
+                username = login_form.cleaned_data.get('username')
+                raw_password = login_form.cleaned_data.get('password')
+                user = authenticate(username=username, password=raw_password)
+                return redirect('home')
+    else:
+        login_form = LoginForm()
+
+    context = {
+        'login_form': login_form,
+    }
+    return render(request, 'Blog/login.html', context)
 
 def registration(request):
     if request.method == 'POST':
@@ -108,29 +125,35 @@ def search(request):
     else:
         messages.error(request,'You need to write what are you looking for')
         return render(request,'Blog/search.html')
-        
+
+def newComent(request,post_id):
+    if request.user.is_authenticated:
+        post = models.Post.objects.get(IDPost = post_id)
+        tresc = request.POST.get('NewComent')
+        new = models.Komentarz.objects.create(IDUzytkownik=request.user,IDPost = post,Tresc=tresc)
+        messages.success(request,"Dodano Komentarz")
+    return redirect('post',post_id)
 
 def post(request,post_id):
+    czyPodanoWczesniej = 'nie'
     post = models.Post.objects.get(IDPost=post_id)
     komentarze = models.Komentarz.objects.filter(IDPost=post_id)
-    for k in komentarze:
-        print(k.Tresc)
-        print(k.Data)
-        print(k.IDKomentarz)
-        print(k.IDUzytkownik)
-        print(k.IDPost)
-        print(k.IDPost.Tresc)
     if request.method == 'POST':
         haslo = request.POST.get('PasswordCheck',False)
         if post.Haslo == haslo:
+            request.session[str(post.IDPost)] = 'wprowadzone'
             return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})
         else:
             messages.error(request,'Podano błędne hasło')
             return redirect('home')
     else:
         if post.Haslo!='':
-            messages.error(request,'Post chroniony hasłem')
-            return redirect('home')
+            czyPodanoWczesniej = request.session.get(str(post.IDPost))
+            if czyPodanoWczesniej == 'wprowadzone':
+                return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})
+            else:
+                messages.error(request,'Post chroniony hasłem')
+                return redirect('home')
         else:
             return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})
 def details(request, blog_id):
@@ -314,12 +337,6 @@ def default_pic(request):
         return  redirect('home')
 
 
-def newComent(request,post_id):
-    if request.user.is_authenticated:
-        post = models.Post.objects.get(IDPost = post_id)
-        tresc = request.POST.get('NewComent')
-        new = models.Komentarz.objects.create(IDUzytkownik=request.user,IDPost = post,Tresc=tresc)
-    return redirect('post',post_id)
 
 def blog(request,blog_id):
     posts= models.Post.objects.filter(IDBlog=blog_id)# wczytywanie plstow z bloga
