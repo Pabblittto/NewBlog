@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from . import models
 from . import form
-from .form import LoginForm
 from .form import CustomRegisterForm
 from .form import ChangeImageForm, ChangeImageFormPost
 from django.contrib.auth.models import User
@@ -24,23 +23,6 @@ def CzyAktywne(request):
         messages.error(request,"Błędny login, lub hasło")
         return redirect('login')
 
-def login(request):
-    if request.method == 'POST':
-        login_form = LoginForm(request.POST)
-        if login_form.is_valid():
-            if user.is_active:
-                login_form.save()
-                username = login_form.cleaned_data.get('username')
-                raw_password = login_form.cleaned_data.get('password')
-                user = authenticate(username=username, password=raw_password)
-                return redirect('home')
-    else:
-        login_form = LoginForm()
-
-    context = {
-        'login_form': login_form,
-    }
-    return render(request, 'Blog/login.html', context)
 
 def registration(request):
     if request.method == 'POST':
