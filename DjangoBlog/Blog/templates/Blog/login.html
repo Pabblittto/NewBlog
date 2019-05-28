@@ -1,6 +1,7 @@
 {%extends "Blog/base.html"%}
 {% load static %}
 {%block title %}
+
 <h4>Zaloguj się</h4>
 <div style="clear: both"></div>
 {%endblock%}
@@ -11,7 +12,11 @@
 <div style="margin-left: 40px;clear: both;">
   <form method="post">
     {% csrf_token %}
-    {{ form.as_p }}
+    <!-- {%for field in login_form.visible_fields%}
+    {{field}}
+    {%endfor%} -->
+
+    {{login_form.as_p}}
     <button type="submit">Login</button>
   </form>
 </div>

@@ -9,7 +9,32 @@
         <form method="POST" action="/registration/" style="margin-left:15px;">
         {% csrf_token %}
         <!-- username-->
-        <div class="mb-2">
+        
+         {% for field in form.visible_fields %}
+            <div class="mb-2">
+               {% if field.name == 'password1' or field.name == 'password2' %}
+               <input type="password" name="{{field.name}}" placeholder="{% if field.name == 'password1'%} Wpisz hasło {%else%} Powtórz hasło {%endif%}" class="form-control">
+               <!-- {{field}} -->
+               {%else%}
+               <input type="text" name="{{field.name}}" placeholder="{% if field.name == 'username'%} Nazwa użytkownika {%else%} E-mail {%endif%}" class="form-control">
+               <!-- {{field}} -->
+               {%endif%}
+                    {%if field.errors%}
+                        {%for error in field.errors %}
+                        <div class="error-text">
+                        -{{error}}
+                        </div>
+                        {%endfor%}
+                       
+                    {%endif%}
+                
+                <!-- {{field.name}} -->
+
+            </div>
+        {%endfor%}
+
+
+        <!-- <div class="mb-2">
             <input type="text" name="username" placeholder="Nazwa Użytkownika" class="form-control">
             {%if form.username.errors%}
                 {%for error in form.username.errors %}
@@ -19,7 +44,7 @@
                 {%endfor%}
             {%endif%}
         </div>
-        <!-- email-->
+
         <div class="mb-2">
             <input type="text" name="email" placeholder="E-mail" class="form-control">
             {%if form.email.errors%}
@@ -30,43 +55,37 @@
                 {%endfor%}
             {%endif%}
         </div>
-        <!-- haslo-->
+
         
-        {% if form.password1.help_text%}
-            {{form.password1.help_text}}
-        {%endif%}
+
         
         <div class="mb-2">
             <input type="password" name="password1" placeholder="Hasło" class="form-control">
-            <!--{%if form.password1.errors%}-->
-            {{form.password1.errors}}
+
 
                 {%for error in form.password1.errors %}
                     <div class="error-text">
                         -{{error}}
                     </div>
                 {%endfor%}
-            <!--{%endif%}-->
+  
         </div>
-            <!-- <div> to jakies dodatkowe info dla password1 
-                    {%if form.password1.help_text%}
-                    <div class="error-text">
-                            {{form.password1.help_text}}
-                    </div>
-                    {%endif%}
-            </div> -->
-        <!-- powtórz hasło-->
+
+ 
         <div class="mb-2">
             <input type="password" name="password2" placeholder="Powtórz hasło" class="form-control">
-            <!--{%if form.password2.error %}-->
-            {{form.password2.errors}}
+
                 {%for error in form.password2.errors%}
                     <div class="error-text">
                             -{{error}}
                     </div>
                 {%endfor%}
-            <!--{%endif%}-->
-        </div>
+    
+            {% if form.password1.help_text%}
+                {{form.password1.help_text}}
+            {%endif%}
+        </div> -->
+    
         <div>
             <button type="submit" class="btn btn-outline-dark">Zarejestruj</button>
         </div>

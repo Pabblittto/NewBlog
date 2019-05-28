@@ -6,7 +6,7 @@
 <div class="media">
         <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="">
         <div class="media-body">
-          <a class="nav-item" href="#"><h5 class="mt-0">{{one_post.Tytul}}</h5></a>
+          <a class="nav-item" href="/post/{{one_post.IDPost}}"><h5 class="mt-0">{{one_post.Tytul}}</h5></a>
           <h6 class='mt-0'><strong>{{one_post.IDBlog.Nazwa}}</strong> | {{one_post.Data}}</h6>
         </div>
       </div>
@@ -15,7 +15,7 @@
 {% for one_blog in blogs %}
 <div class="media">
         <div class="media-body">
-          <a class="nav-item" href="#"><h5 class="mt-0">{{one_blog.Nazwa}}</h5></a>
+          <a class="nav-item" href="/blog/{{one_blog.IDBlog}}"><h5 class="mt-0">{{one_blog.Nazwa}}</h5></a>
           <h6 class='mt-0'>Author: <strong>{{one_blog.IDAutor}}</strong></h6>
         </div>
       </div>

@@ -8,7 +8,7 @@
         {% for post in posts%}
         <div class="media row">
                 <a href="/post/{{post.IDPost}}" class="col-3">
-                    <div class=" text-center" style="border-style: dotted">
+                    <div class=" text-center" style="border-style: solid">
                       <img src="/Obrazki/{{post.Obraz}}" alt="obrazek" height="100px"/>
                     </div>
                 </a>
@@ -59,10 +59,10 @@
         {%endfor%}<!--for do wyswietlania postow-->
     </div>
     <div class="col-4"><!--info o autorze-->
-        <div class=" text-center">
+        <div class="text-center">
             <h5>Autor: {{user.username}}</h5>
         </div>
-        <div><!-- obrazekkkk-->
+        <div class="text-center"><!-- obrazekkkk-->
             <img src="/Obrazki/{{profil.Zdjecie}}" style="height:300px"/>
         </div>
         <div><!-- opis profilu-->

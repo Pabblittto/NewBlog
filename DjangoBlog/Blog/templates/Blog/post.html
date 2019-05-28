@@ -2,29 +2,29 @@
 {%block content%}
 
 <div class="media">
-  <img class="d-flex mr-3" data-src="{{post.Obraz}}" alt="">
-  <div class="media-body">
-    <h5 class="mt-0">{{post.Tytul}}</h5>
+  <div class="media-body container">
+    <div class="text-center">
+      <h1 class="mt-0">{{post.Tytul}}</h1>
+      <img src="/Obrazki/{{post.Obraz}}" height="300px">
+    </div>
     <a class="" href="/blog/{{post.IDBlog.IDBlog}}"><h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong> </a> | {{post.Data}}</h6>
     <p style="float:left;max-width:50%; white-space: pre-wrap">{{post.Tresc}}</p>
-    {%if post.Obraz%}
-      <img src="/Obrazki/{{post.Obraz}}" style="float:right;max-width: 50%;">
-    {%endif%}
   </div>
 </div>
 <br>
-<h6>Komentarze:</h6>
-{%if komentarze%}
-{%for komentarz in komentarze%}
-<p><strong>{{komentarz.IDUzytkownik.username}}</strong><br>{{komentarz.Tresc}} | {{komentarz.Data}}</p>
-{%endfor%}
-{%endif%}
-{%if user.is_authenticated%}
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCentered">
-    Dodaj Komentarz
-  </button>
-  
-  <!-- Wywołanie formularza do nowego bloga -->
+<div class="container" style="background-color:rgb(255, 123, 0)" >
+  <h6>Komentarze:</h6>
+  {%if komentarze%}
+  {%for komentarz in komentarze%}
+  <p><strong>{{komentarz.IDUzytkownik.username}} | {{komentarz.Data}}</strong><br>{{komentarz.Tresc}} </p>
+  {%endfor%}
+  {%endif%}
+  {%if user.is_authenticated%}
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCentered">
+      Dodaj Komentarz
+    </button>
+</div>
+  <!-- Wywołanie formularza do nowego komentarza -->
   <form action="newComent/" method="post">
     {% csrf_token %}
   <div class="modal" id="exampleModalCentered" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">

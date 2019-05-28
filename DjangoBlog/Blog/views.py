@@ -58,7 +58,7 @@ def registration(request):
             tresc = render_to_string('Blog/E-mail.html', {
                 'user': user,
                 'domena': strona.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)).decode(),
                 'token':account_activation_token.make_token(user),
             })
             odbiorca = user.email
@@ -69,6 +69,7 @@ def registration(request):
            # user.is_active = False
             return redirect('home')
         else:
+            #Form= CustomRegisterForm(request.POST)
             messages.error(request,"Błąd podczas wypełniania formularza")
             return render(request,'Blog/registration.html',{'form': Form})
     else:
