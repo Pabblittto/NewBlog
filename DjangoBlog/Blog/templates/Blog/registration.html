@@ -6,7 +6,7 @@
         <div class="text-center">
             <h3>Rejestracja</h3>
         </div>
-        <form method="POST" action="/registration/" style="margin-left:15px;">
+        <form method="POST" action="/registration/">
         {% csrf_token %}
         <!-- username-->
         
@@ -32,59 +32,6 @@
 
             </div>
         {%endfor%}
-
-
-        <!-- <div class="mb-2">
-            <input type="text" name="username" placeholder="Nazwa Użytkownika" class="form-control">
-            {%if form.username.errors%}
-                {%for error in form.username.errors %}
-                <div class="error-text">
-                   -{{error}}
-                </div>
-                {%endfor%}
-            {%endif%}
-        </div>
-
-        <div class="mb-2">
-            <input type="text" name="email" placeholder="E-mail" class="form-control">
-            {%if form.email.errors%}
-                {%for error in form.email.errors %}
-                <div class="error-text">
-                    {{error}}
-                </div>
-                {%endfor%}
-            {%endif%}
-        </div>
-
-        
-
-        
-        <div class="mb-2">
-            <input type="password" name="password1" placeholder="Hasło" class="form-control">
-
-
-                {%for error in form.password1.errors %}
-                    <div class="error-text">
-                        -{{error}}
-                    </div>
-                {%endfor%}
-  
-        </div>
-
- 
-        <div class="mb-2">
-            <input type="password" name="password2" placeholder="Powtórz hasło" class="form-control">
-
-                {%for error in form.password2.errors%}
-                    <div class="error-text">
-                            -{{error}}
-                    </div>
-                {%endfor%}
-    
-            {% if form.password1.help_text%}
-                {{form.password1.help_text}}
-            {%endif%}
-        </div> -->
     
         <div>
             <button type="submit" class="btn btn-outline-dark">Zarejestruj</button>

@@ -13,6 +13,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
 from django.template.loader import render_to_string
 from email.parser import HeaderParser
+from django.contrib.auth import authenticate, login
 import imaplib
 # Create your views here.
 def CzyAktywne(request):
@@ -22,6 +23,30 @@ def CzyAktywne(request):
     else:
         messages.error(request,"Błędny login, lub hasło")
         return redirect('login')
+
+def Mylogin(request):
+    if request.method == 'POST':
+        username= request.POST['username']
+        password= request.POST['password']
+        user=authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request,user)
+            messages.success(request,"Poprawnie zalogowano")
+            return redirect('home')
+        else:   #nie ma takiego usera 
+            try:
+                UserModel=models.User.objects.get(username=username)
+                if UserModel.is_active == False:
+                    messages.error(request,"Konto nie zostało aktywowane!")
+                else:
+                    messages.error(request,"Niepoprawne dane do logowania!")
+            except Exception:
+                messages.error(request,"Niepoprawne dane do logowania!")  
+            return redirect('login')
+    else:
+        return render(request ,'Blog/login.html') # tu po prostu wyswietla forma bo ktos chce sie zalogowac
+
+
 
 
 def registration(request):
@@ -93,20 +118,20 @@ def profile(request):
 def search(request):
     if (request.method=='GET'):
         if request.GET.get('search')=='':
-            messages.error(request,'You need to write what are you looking for')
+            messages.error(request,'Wpisz czego szukasz!')
             return render(request,'Blog/search.html')
         fraza=request.GET.get('search')
         typ=request.GET.get('typ',False)
         if typ=='Post':
             posty=models.Post.objects.filter(Tytul__contains=fraza).order_by('-Data')
-            messages.success(request,f'There are {posty.count()} posts with your phrase')
+            messages.success(request,f'Istnieją {posty.count()} posty z twoją frazą')
             return render(request,'Blog/search.html',{'posts':posty,'phase':fraza,'type':typ})            
-        else:
+        else:# wyszukiwnie blogu
             blogi=models.Blog.objects.filter(Nazwa__contains=fraza)
-            messages.success(request,f'There are {blogi.count()} blogs with your phrase')
+            messages.success(request,f'Istnieją {blogi.count()} blogi z twoją frazą')
             return render(request,'Blog/search.html',{'blogs':blogi,'phase':fraza,'type':typ})               
     else:
-        messages.error(request,'You need to write what are you looking for')
+        messages.error(request,'Wpisz czego szukasz!')
         return render(request,'Blog/search.html')
 
 def newComent(request,post_id):

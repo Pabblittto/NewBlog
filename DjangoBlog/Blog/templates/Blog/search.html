@@ -14,9 +14,12 @@
 {% else %}
 {% for one_blog in blogs %}
 <div class="media">
-        <div class="media-body">
-          <a class="nav-item" href="/blog/{{one_blog.IDBlog}}"><h5 class="mt-0">{{one_blog.Nazwa}}</h5></a>
-          <h6 class='mt-0'>Author: <strong>{{one_blog.IDAutor}}</strong></h6>
+        <div class="row">
+
+          <div class="col"> <!--kolumna dla nazwy bloga-->
+            <a class="nav-item" href="/blog/{{one_blog.IDBlog}}"><h5 class="mt-0">{{one_blog.Nazwa}}</h5></a>
+            <h6 class='mt-0'>Author: <strong>{{one_blog.IDAutor}}</strong></h6>
+          </div>  
         </div>
       </div>
 {% endfor %}
