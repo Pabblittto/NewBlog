@@ -5,57 +5,69 @@
         <div class="text-center"><!-- tytul bloga!!-->
             <h2>{{blog.Nazwa}}</h2>
         </div>
-        {% for post in posts%}
+        {%for post in posts %}
         <div class="media row">
-                <a href="/post/{{post.IDPost}}" class="col-3">
+          
+              
+                  {%if post.Haslo%}
+                    <a class="col-3" data-toggle="modal" data-target="#exampleModalCentered{{post.IDPost}}" href="">
+                        <div class=" text-center" style="border-style: solid">
+                          <img src="/Obrazki/Obrazki/lock.png" height="100px"/>
+                        </div>
+                    </a>
+                  {%else%}
+                  <a href="/post/{{post.IDPost}}" class="col-3">
                     <div class=" text-center" style="border-style: solid">
                       <img src="/Obrazki/{{post.Obraz}}" alt="obrazek" height="100px"/>
-                    </div>
-                </a>
-                <div class="media-body col-7">
-                  {%if post.Haslo%}
-                  <a class="nav-item" data-toggle="modal" data-target="#exampleModalCentered{{post.IDPost}}" href="">
-                    <h5 class="mt-0" style="float:left">{{post.Tytul}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
-                  </a>
-                  <img src="/Obrazki/Obrazki/lock.png" style="max-width:20px;max-height:20px;float:left"> <div style="clear:both"></div>
-                      <div class="modal" id="exampleModalCentered{{post.IDPost}}" tabindex="-1" role="dialog" aria-labelledby="exampleModal CenteredLabel{{post.IDPost}}" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalCenteredLabel{{post.IDPost}}">Post strzeżony hasłem</h5>
-                              <input type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </div>
-                            <div class="modal-body">
-                              <div class="form-group">
-                                  <form action="/post/{{post.IDPost}}/" method="post">
-                                    {% csrf_token %}
-                                <input type="text" class="form-control" id="PasswordCheck" name="PasswordCheck" placeholder="Wprowadź hasło" >
-                              </div> 
-                            </div>
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
-                              <input type="submit" class="btn btn-primary" id="PasswordCheckS" name="PasswordCheckS"  > 
-                            </div>
-                          </form>
-                          </div>
-                        </div>
+                    </div>  
+                   </a>
+                  {%endif%}
+              
+         
+          <div class="media-body col-7">
+            {%if post.Haslo%}
+            <a class="nav-item" data-toggle="modal" data-target="#exampleModalCentered{{post.IDPost}}" href="">
+              <h5 class="mt-0" style="float:left">{{post.Tytul}}</h5>
+            </a>
+          
+              <img src="/Obrazki/Obrazki/lock.png" style="max-width:20px;max-height:20px;float:left">
+            
+            <div style="clear:both"></div>
+                <div class="modal" id="exampleModalCentered{{post.IDPost}}" tabindex="-1" role="dialog" aria-labelledby="exampleModal CenteredLabel{{post.IDPost}}" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenteredLabel{{post.IDPost}}">Post strzeżony hasłem</h5>
+                        <input type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
                       </div>
-                    {%else%}
-                    <a class="nav-item" href="/post/{{post.IDPost}}"><h5 class="mt-0">{{post.Tytul}}</h5></a>
-                    {%endif%}
-                    <a href="/blog/{{post.IDBlog.IDBlog}}" ><h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong></a> | {{post.Data}}</h6>
-                    {%if post.Haslo %}
-                      <h6><strong>Tajne</strong></h6>
-                    {%else%}
-                      <h6>{{post.Tresc|truncatewords:25}}</h6>
-                    {%endif%}
-                    <br>
+                      <div class="modal-body">
+                        <div class="form-group">
+                            <form action="/post/{{post.IDPost}}/" method="post">
+                              {% csrf_token %}
+                          <input type="text" class="form-control" id="PasswordCheck" name="PasswordCheck" placeholder="Wprowadź hasło" >
+                        </div> 
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+                        <input type="submit" class="btn btn-primary" id="PasswordCheckS" name="PasswordCheckS"  > 
+                      </div>
+                    </form>
+                    </div>
+                  </div>
                 </div>
-              </div>
-
-
-
+              {%else%}
+              <a class="nav-item" href="post/{{post.IDPost}}"><h5 class="mt-0">{{post.Tytul}}</h5></a>
+              {%endif%}
+              <a href="/blog/{{post.IDBlog.IDBlog}}" ><h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong></a> | {{post.Data}}</h6>
+              {%if post.Haslo %}
+                <h6><strong>Tajne</strong></h6>
+              {%else%}
+                <h6>{{post.Tresc|truncatewords:25}}</h6>
+              {%endif%}
+              <br>
+          </div>
+        </div>
         {%endfor%}<!--for do wyswietlania postow-->
     </div>
     <div class="col-4"><!--info o autorze-->
