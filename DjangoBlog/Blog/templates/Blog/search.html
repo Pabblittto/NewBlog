@@ -60,7 +60,7 @@
   {%if post.Haslo %}
     <h6><strong>Tajne</strong></h6>
   {%else%}
-    <h6>{{post.Tresc|truncatewords:25}}</h6>
+    <h6>{{post.Tresc|truncatewords:20}}</h6>
   {%endif%}
   <br>
   </div>
@@ -70,11 +70,12 @@
 
 {% for one_blog in blogs %}  
         <div class="row">
-
-          <div class="col-5" style="border-top: dotted"> <!--kolumna dla nazwy bloga-->
-            <a class="" href="/blog/{{one_blog.IDBlog}}"><h5 class="">{{one_blog.Nazwa}}</h5></a>
+          <a class="col" href="/blog/{{one_blog.IDBlog}}">
+          <div class="col p-2 m-1 hovered" style="border-radius:20px ; border-style: dashed"> <!--kolumna dla nazwy bloga-->
+            <h5 class="">{{one_blog.Nazwa}}</h5>
             <h6 class='mt-0'>Autor: <strong>{{one_blog.IDAutor}}</strong></h6>
           </div>  
+          </a>
         </div>
 {% endfor %}
 
