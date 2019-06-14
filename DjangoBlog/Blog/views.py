@@ -147,6 +147,22 @@ def post(request,post_id):
     post = models.Post.objects.get(IDPost=post_id)
     komentarze = models.Komentarz.objects.filter(IDPost=post_id)
     if request.method == 'POST':
+        if request.POST.get('IdKomenta'): # jezeli jest takie pole to znaczy ze moze byc usuwanie
+            if post.IDBlog.IDAutor == request.user:# jezeli to sie nie zgadza to znaczy ze ktos chce nas oszukac
+                try:
+                    komentarzDoWywalenia= models.Komentarz.objects.get(IDKomentarz=request.POST.get('IdKomenta'))
+                except:
+                    messages.error(request,"Nie ma takiego komentarza do usunięcia!")
+                    return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})
+                messages.success(request,f"Usunięto komentarz {komentarzDoWywalenia.IDUzytkownik.username}")
+                komentarzDoWywalenia.delete()
+                komantarze=models.Komentarz.objects.filter(IDPost=post_id)# ponowne wczytanie listy komentarzy 
+                return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})
+            else:
+                messages.error(request,"Nie jesteś właścicielem posta!!!")
+                return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})
+
+        # jezeli nie ma takiego pola w poscie to idz dalej
         haslo = request.POST.get('PasswordCheck',False)
         if post.Haslo == haslo:
             request.session[str(post.IDPost)] = 'wprowadzone'
@@ -164,6 +180,7 @@ def post(request,post_id):
                 return redirect('home')
         else:
             return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})
+
 def details(request, blog_id):
     b = models.Blog.objects.get(IDBlog = blog_id)
     posts = models.Post.objects.filter(IDBlog = blog_id)
@@ -349,9 +366,9 @@ def default_pic(request):
 def blog(request,blog_id):
     posts= models.Post.objects.filter(IDBlog=blog_id)# wczytywanie plstow z bloga
     blog= models.Blog.objects.get(IDBlog=blog_id)
-    user=blog.IDAutor
-    profil= models.Profil.objects.get(User=user)
-    return render(request,'Blog/blogPosts.html',{'profil':profil,'posts':posts,'blog':blog,'user':user})
+    userr=blog.IDAutor
+    profil= models.Profil.objects.get(User=userr)
+    return render(request,'Blog/blogPosts.html',{'profil':profil,'posts':posts,'blog':blog,'userr':userr})
 
 def PostnewImage(request,post_id):
     if request.method == 'POST':

@@ -16,7 +16,41 @@
   <h6>Komentarze:</h6>
   {%if komentarze%}
   {%for komentarz in komentarze%}
-  <p><strong>{{komentarz.IDUzytkownik.username}} | {{komentarz.Data}}</strong><br>{{komentarz.Tresc}} </p>
+  <div>
+    <div class="row">
+      <div class="col-auto">
+        <p><strong>{{komentarz.IDUzytkownik.username}} | {{komentarz.Data}}</strong></p> 
+      </div>
+      {% if user.is_authenticated and post.IDBlog.IDAutor == user %}
+      <div class=" col-1">        
+          <button class="btn btn-light" type="button" data-toggle="modal" data-target="#usuwanie{{komentarz.IDKomentarz}}">Usuń</button>
+          <form action="{% url 'post' post_id=post.IDPost %}" method="POST">
+              {% csrf_token %}
+              <input type="hidden" name="IdKomenta" value="{{komentarz.IDKomentarz}}">
+          <div class="modal" id="usuwanie{{komentarz.IDKomentarz}}" tabindex="-1" role="dialog" aria-labelledby="usuwanie{{komentarz.IDKomentarz}}" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalCenteredLabel">Czy chcesz usunąć ten komentarz?</h5>
+                    <input type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-footer ">
+                      
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Nie</button>
+                    <button type="submit" class="btn btn-dark">Tak</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+      </div>
+      {%endif%}
+    </div>
+      <p>{{komentarz.Tresc}} </p>
+    <hr>
+  </div>
   {%endfor%}
   {%endif%}
   {%if user.is_authenticated%}
@@ -24,6 +58,9 @@
       Dodaj Komentarz
     </button>
 </div>
+<!-- to jest usuwanie komentarza-->
+
+
   <!-- Wywołanie formularza do nowego komentarza -->
   <form action="newComent/" method="post">
     {% csrf_token %}

@@ -87,7 +87,7 @@
   </button>
   
   <!-- Wywołanie formularza do nowego bloga -->
-  <form action="/blog/{{blog.IDBlog}}/delete" method="post">
+  <form action="/blog/{{blog.IDBlog}}/delete/" method="post">
     {% csrf_token %}
   <div class="modal" id="blogDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenteredLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

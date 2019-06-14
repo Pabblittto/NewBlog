@@ -57,7 +57,7 @@
                   </div>
                 </div>
               {%else%}
-              <a class="nav-item" href="post/{{post.IDPost}}"><h5 class="mt-0">{{post.Tytul}}</h5></a>
+              <a class="nav-item" href="/post/{{post.IDPost}}"><h5 class="mt-0">{{post.Tytul}}</h5></a>
               {%endif%}
               <a href="/blog/{{post.IDBlog.IDBlog}}" ><h6 class='mt-0'><strong>{{post.IDBlog.Nazwa}}</strong></a> | {{post.Data}}</h6>
               {%if post.Haslo %}
@@ -72,7 +72,7 @@
     </div>
     <div class="col-4"><!--info o autorze-->
         <div class="text-center">
-            <h5>Autor: {{user.username}}</h5>
+            <h5>Autor: {{userr.username}}</h5>
         </div>
         <div class="text-center"><!-- obrazekkkk-->
             <img src="/Obrazki/{{profil.Zdjecie}}" style="height:300px"/>
