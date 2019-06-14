@@ -171,7 +171,7 @@ def post(request,post_id):
             messages.error(request,'Podano błędne hasło')
             return redirect('home')
     else:
-        if post.Haslo!='':
+        if post.Haslo!='' and post.IDBlog.IDAutor != request.user:
             czyPodanoWczesniej = request.session.get(str(post.IDPost))
             if czyPodanoWczesniej == 'wprowadzone':
                 return render(request,'Blog/post.html',{'post':post,'komentarze': komentarze})

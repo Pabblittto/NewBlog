@@ -7,7 +7,7 @@
 <div class="media row">
   
       
-          {%if post.Haslo%}
+          {%if post.Haslo and not user.is_authenticated or post.Haslo and user.is_authenticated and user != post.IDBlog.IDAutor%}
             <a class="col-2" data-toggle="modal" data-target="#exampleModalCentered{{post.IDPost}}" href="">
                 <div class=" text-center" style="border-style: solid">
                   <img src="/Obrazki/Obrazki/lock.png" height="100px"/>
@@ -16,14 +16,18 @@
           {%else%}
           <a href="/post/{{post.IDPost}}" class="col-2">
             <div class=" text-center" style="border-style: solid">
-              <img src="/Obrazki/{{post.Obraz}}" alt="obrazek" height="100px"/>
+              {% if post.Haslo and user == post.IDBlog.IDAutor %}<!--jezeli jednak post ma haslo i przeglada wlasciciel to pokarz kłódkę -->
+                <img src="/Obrazki/Obrazki/lock.png" height="100px"/>
+              {%else%}
+                <img src="/Obrazki/{{post.Obraz}}" alt="obrazek" height="100px"/>
+              {%endif%}
             </div>  
            </a>
           {%endif%}
       
  
   <div class="media-body col-7">
-    {%if post.Haslo%}
+    {%if post.Haslo and not user.is_authenticated or post.Haslo and user.is_authenticated and user != post.IDBlog.IDAutor%}
     <a class="nav-item" data-toggle="modal" data-target="#exampleModalCentered{{post.IDPost}}" href="">
       <h5 class="mt-0" style="float:left">{{post.Tytul}}</h5>
     </a>
@@ -43,7 +47,7 @@
                 <div class="form-group">
                     <form action="/post/{{post.IDPost}}/" method="post">
                       {% csrf_token %}
-                  <input type="text" class="form-control" id="PasswordCheck" name="PasswordCheck" placeholder="Wprowadź hasło" >
+                  <input type="password" class="form-control" id="PasswordCheck" name="PasswordCheck" placeholder="Wprowadź hasło" >
                 </div> 
               </div>
               <div class="modal-footer">
