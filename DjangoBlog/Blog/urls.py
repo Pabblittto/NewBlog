@@ -23,6 +23,7 @@ urlpatterns = [
     path('delete/<int:blog_id>/<int:post_id>/',views.postDelete,name='postDelete'),
     path('blog/<int:blog_id>/delete/',views.blogDelete,name='blogDelete'),
     path('post/<int:post_id>/edit/',views.postEdit,name='postEdit'),
+    path('post/<int:post_id>/edit/edit/',views.editPost,name='editPost'),
     path('post/<int:post_id>/edit/title/',views.postEditTitle,name='postEditTitle'),
     path('post/<int:post_id>/edit/content/',views.postEditContent,name='postEditContent'),
     path('post/<int:post_id>/edit/newPassword/',views.postNewPassword,name='postNewPassword'),

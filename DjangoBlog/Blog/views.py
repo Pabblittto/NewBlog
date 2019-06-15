@@ -248,6 +248,61 @@ def blogDelete(request,blog_id):
         return redirect('profile')
     else:
         return redirect('home')
+def editPost(request,post_id):
+    zmianaObrazka = False
+    zmianaHasla = False
+    zmianaTytulu = False
+    zmianaTresci = False
+    post = models.Post.objects.get(IDPost = post_id)
+    tytul = request.POST.get('TytulForm')
+    tresc = request.POST.get('ContentForm')
+    if not post.Haslo:
+        haslo = request.POST.get('NewPasswordForm', '')
+        if haslo != '':
+            if len(haslo) <= 8:
+                post.Haslo = haslo
+                zmianaHasla = True
+            else:
+                messages.error(request,"Haslo jest za dlugie(max 8 znakow)")
+    else:
+        hasloStare = request.POST.get('OldPasswordForm', '')
+        hasloNowe = request.POST.get('PasswordForm', '')
+        if hasloStare != '':
+            if hasloStare == post.Haslo:
+                if len(hasloNowe) < 9 :
+                    post.Haslo = hasloNowe
+                    zmianaHasla = True
+                else:
+                    messages.error(request,"Nowe haslo jest za dlugie(max 8 znakow)")
+            else:
+                messages.error(request,"Stare hasło jest niepoprawne")
+    if post.Tytul != tytul:
+        zmianaTytulu = True
+    if post.Tresc != tresc:
+        zmianaTresci = True
+    post.Tytul = tytul
+    post.Tresc = tresc
+    if 'Obraz' not in request.POST :
+        nazwaObrazka=post.Obraz.url # to przechowuje nazwe pliku
+        Obrazek_z_forma=ChangeImageFormPost(request.POST,request.FILES, instance=post)           
+        if Obrazek_z_forma.is_valid():
+            #usuwanie obrazka z bazy jezeli nie jest obrazkiem domyslnym
+            if nazwaObrazka!='/Obrazki/Obrazki/default_pic.jpg':
+                tmp= os.getcwd()
+                nazwaObrazka= nazwaObrazka.replace("/","\\")
+                wywal_plik=tmp+nazwaObrazka
+                try:
+                    os.remove(wywal_plik)
+                except FileNotFoundError:
+                    pass # jakk nie ma pliku to w sumie nic sie nie dzieje bo i tak go niie chcemy
+            Obrazek_z_forma.save()
+            post.Obraz = Obrazek_z_forma
+            zmianaObrazka = True
+    post.save()
+    if zmianaHasla or zmianaTresci or zmianaTytulu or zmianaObrazka:
+        messages.success(request,"Post zaktualizowano")
+    return redirect('postEdit',post_id)
+
 def postEdit(request,post_id):
     post = models.Post.objects.get(IDPost = post_id)
     return render(request,'Blog/edit.html', {'post': post})
@@ -302,8 +357,6 @@ def passwordDelete(request,post_id):
     post = models.Post.objects.get(IDPost = post_id)
     haslo = post.Haslo
     confirm = request.POST.get('PasswordForm')
-    print(confirm)
-    print(haslo)
     if haslo == confirm:
         post.Haslo = ''
         post.save()
